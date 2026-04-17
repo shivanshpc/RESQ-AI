@@ -1,0 +1,1731 @@
+{
+  "settings": {
+    "theme": "light",
+    "activeDisaster": "Assam Flood",
+    "region": "Assam, India"
+  },
+  "checklist": {
+    "doc": false,
+    "torch": false,
+    "firstaid": false,
+    "hydration": false
+  },
+  "resources": [
+    {
+      "id": "res-1775209230282-vgluf7",
+      "name": "Drinking Water",
+      "category": "Food",
+      "stock": 4800,
+      "unit": "liters",
+      "location": "Guwahati Central Depot",
+      "createdAt": "2026-04-03T09:40:30.282Z"
+    },
+    {
+      "id": "res-1775209230283-wqe786",
+      "name": "ORS Packets",
+      "category": "Medical",
+      "stock": 920,
+      "unit": "packs",
+      "location": "Jorhat Relief Camp",
+      "createdAt": "2026-04-03T09:40:30.283Z"
+    }
+  ],
+  "volunteers": [
+    {
+      "id": "vol-1775209230283-huiefm",
+      "name": "Riya Das",
+      "phone": "9000000011",
+      "skill": "First Aid",
+      "shift": "Morning",
+      "location": "Ward 4 Base",
+      "status": "active",
+      "createdAt": "2026-04-03T09:40:30.283Z"
+    }
+  ],
+  "shelters": [
+    {
+      "id": "sh-1775209230283-0f6jb2",
+      "name": "Guwahati-5 — St. Xavier's School",
+      "area": "Guwahati",
+      "capacity": 500,
+      "occupied": 347,
+      "hasFood": true,
+      "hasWater": true,
+      "hasMedical": true,
+      "status": "active",
+      "createdAt": "2026-04-03T09:40:30.283Z"
+    },
+    {
+      "id": "sh-1775209230283-37pm0s",
+      "name": "Guwahati-3 — District Hall",
+      "area": "Guwahati",
+      "capacity": 500,
+      "occupied": 420,
+      "hasFood": true,
+      "hasWater": true,
+      "hasMedical": false,
+      "status": "active",
+      "createdAt": "2026-04-03T09:40:30.283Z"
+    }
+  ],
+  "reports": [
+    {
+      "id": "rep-1775236639337-quzkt9",
+      "reportName": "Flood",
+      "type": "🚫 Road Blocked / Flooded",
+      "location": "Laxmi Nagar, New Delhi",
+      "locationDescription": "Laxmi Nagar, New Delhi",
+      "severity": "High",
+      "description": "Yamuna river is",
+      "latitude": 28.6428,
+      "longitude": 77.2802,
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T17:17:19.337Z"
+    },
+    {
+      "id": "rep-1775217157922-6refda",
+      "reportName": "Temporary Footpath Route Is Open",
+      "type": "Safe Zone Identified",
+      "location": "Old embankment path near Moran",
+      "locationDescription": "Old embankment path near Moran",
+      "severity": "Medium",
+      "description": "Raised mud embankment remains passable for walking evacuation toward camp gate. Not suitable for vehicles. Route should be marked with ropes or flags before sunset to prevent slips during low visibility.",
+      "latitude": 27.1879,
+      "longitude": 95.2153,
+      "source": "VOLUNTEER",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.923Z"
+    },
+    {
+      "id": "rep-1775217157912-kwacvn",
+      "reportName": "Children Stranded At Anganwadi Roof",
+      "type": "SOS - People Trapped",
+      "location": "Chandmari Lane 4, Guwahati",
+      "locationDescription": "Chandmari Lane 4, Guwahati",
+      "severity": "Critical",
+      "description": "Eight children and two caretakers moved to roof after boundary wall collapsed. Heavy rain continues and phone battery is below 10 percent. Nearby residents can signal with flashlights but cannot cross due to waist-deep flow.",
+      "latitude": 26.1773,
+      "longitude": 91.7745,
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.912Z"
+    },
+    {
+      "id": "rep-1775217157902-htde2l",
+      "reportName": "Boat Fuel Shortage In Rescue Sector",
+      "type": "Medical Help Needed",
+      "location": "Majuli ferry ghat sector",
+      "locationDescription": "Majuli ferry ghat sector",
+      "severity": "High",
+      "description": "Rescue team has boats available but fuel left for only one additional trip. At least 27 residents still waiting on elevated homes. Request urgent diesel cans plus one paramedic team due to reported fever cases among evacuees.",
+      "latitude": 26.9536,
+      "longitude": 94.2142,
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.902Z"
+    },
+    {
+      "id": "rep-1775217157895-hqktp7",
+      "reportName": "Community Kitchen Ready With Dry Rations",
+      "type": "Food / Water Available",
+      "location": "Ward 3 Relief Kitchen, Jorhat",
+      "locationDescription": "Ward 3 Relief Kitchen, Jorhat",
+      "severity": "Medium",
+      "description": "Local committee has prepared rice, dal, biscuits, and ORS packs. Potable water tanker arrived at 06:20. Capacity around 300 meal portions this cycle, with preference for children and elders first.",
+      "latitude": 26.7465,
+      "longitude": 94.2037,
+      "source": "SMS",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.895Z"
+    },
+    {
+      "id": "rep-1775217157882-ye39j6",
+      "reportName": "Bridge Approach Road Fully Submerged",
+      "type": "Road Blocked / Flooded",
+      "location": "Approach road to Bogibeel Bridge",
+      "locationDescription": "Approach road to Bogibeel Bridge",
+      "severity": "High",
+      "description": "Two-wheelers are getting swept sideways near the eastern approach. Water depth estimated at 2.5 feet and still rising. Recommend immediate barricading and reroute via higher service road before dawn traffic starts.",
+      "latitude": 27.5672,
+      "longitude": 94.9784,
+      "source": "IVRS",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.883Z"
+    },
+    {
+      "id": "rep-1775217157874-5516vs",
+      "reportName": "School Campus Confirmed As Safe Zone",
+      "type": "Safe Zone Identified",
+      "location": "Govt HS School Ground, Sivasagar",
+      "locationDescription": "Govt HS School Ground, Sivasagar",
+      "severity": "Low",
+      "description": "Ground is dry, electricity is stable, and hand-pump water is available. Community members have already arranged basic mats and lanterns. Space is sufficient for approximately 150 people for 24 hours.",
+      "latitude": 26.9844,
+      "longitude": 94.6376,
+      "source": "VOLUNTEER",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.874Z"
+    },
+    {
+      "id": "rep-1775217157865-wg9mmg",
+      "reportName": "Medicines Needed For Dialysis Patient",
+      "type": "Medical Help Needed",
+      "location": "Latasil neighborhood, Guwahati",
+      "locationDescription": "Latasil neighborhood, Guwahati",
+      "severity": "High",
+      "description": "Local volunteer team found a 62-year-old dialysis patient who missed treatment due to road closure. Current medicines will run out by tonight. The family requests transport support to nearest functioning unit and immediate supply of BP and diabetes medication.",
+      "latitude": 26.1824,
+      "longitude": 91.7458,
+      "source": "WHATSAPP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.865Z"
+    },
+    {
+      "id": "rep-1775217157846-2skzmh",
+      "reportName": "Night Rescue At Railway Colony",
+      "type": "SOS - People Trapped",
+      "location": "Railway Colony Block B, Dibrugarh",
+      "locationDescription": "Railway Colony Block B, Dibrugarh",
+      "severity": "Critical",
+      "description": "Water entered ground floor after midnight and rose to chest level within 40 minutes. A family of five, including a pregnant woman, is now on the terrace with one torch and no food. Neighbors report strong current in the lane, so boat extraction is required rather than on-foot evacuation.",
+      "latitude": 27.4731,
+      "longitude": 94.912,
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:52:37.846Z"
+    },
+    {
+      "id": "rep-1775216966288-0c0fne",
+      "reportName": "Bridge Rescue Request",
+      "type": "SOS - People Trapped",
+      "location": "NH-27 Bridge Segment 2",
+      "locationDescription": "NH-27 Bridge Segment 2",
+      "severity": "Critical",
+      "description": "Multiple people stranded near broken bridge section",
+      "latitude": 26.1785,
+      "longitude": 91.7624,
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:49:26.288Z"
+    },
+    {
+      "id": "rep-1775216697377-pk2wn5",
+      "type": "?? SOS - People Trapped",
+      "location": "Dibrugarh Riverbank Lane 5",
+      "severity": "Critical",
+      "description": "Child and elderly person stranded on rooftop",
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:44:57.378Z"
+    },
+    {
+      "id": "rep-1775216697371-4pc9m9",
+      "type": "?? Medical Help Needed",
+      "location": "Sibsagar Sector 3",
+      "severity": "High",
+      "description": "Two injured seniors need immediate transport",
+      "source": "SMS",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:44:57.371Z"
+    },
+    {
+      "id": "rep-1775216697365-tybo6y",
+      "type": "?? Food / Water Available",
+      "location": "Relief Camp B, Guwahati",
+      "severity": "Medium",
+      "description": "Cooked meals and drinking water available for 300",
+      "source": "WHATSAPP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:44:57.365Z"
+    },
+    {
+      "id": "rep-1775216697356-4sulpa",
+      "type": "?? Safe Zone Identified",
+      "location": "St. Mary School Ground, Dibrugarh",
+      "severity": "Low",
+      "description": "Dry elevated area can hold 120 people",
+      "source": "VOLUNTEER",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:44:57.356Z"
+    },
+    {
+      "id": "rep-1775216697346-dq5bp6",
+      "type": "?? Road Blocked / Flooded",
+      "location": "NH-27 near Khumtai Junction",
+      "severity": "High",
+      "description": "Road fully submerged, vehicles stranded",
+      "source": "IVRS",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:44:57.346Z"
+    },
+    {
+      "id": "rep-1775216697310-q4c05a",
+      "type": "?? SOS - People Trapped",
+      "location": "Jorhat Ward 7, Building C",
+      "severity": "Critical",
+      "description": "Family of 4 trapped on 2nd floor, water rising quickly",
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:44:57.310Z"
+    },
+    {
+      "id": "rep-1775216480240-oydptp",
+      "type": "SOS Test",
+      "location": "Test Ward",
+      "severity": "High",
+      "description": "Integration test report",
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:41:20.240Z"
+    },
+    {
+      "id": "rep-1775216456793-w44qaf",
+      "type": "?? SOS - People Trapped",
+      "location": "Test Ward",
+      "severity": "High",
+      "description": "Integration test report",
+      "source": "APP",
+      "status": "pending",
+      "confirmations": 0,
+      "createdAt": "2026-04-03T11:40:56.793Z"
+    }
+  ],
+  "alerts": [],
+  "logs": [
+    {
+      "id": "log-1775265168833-go3sup",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 84% confidence — 24,917 at risk",
+      "createdAt": "2026-04-04T01:12:48.833Z"
+    },
+    {
+      "id": "log-1775265155791-bny544",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 82.7% confidence — 24,917 at risk",
+      "createdAt": "2026-04-04T01:12:35.791Z"
+    },
+    {
+      "id": "log-1775264701491-ezh7mn",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 78% confidence — 18,115 at risk",
+      "createdAt": "2026-04-04T01:05:01.492Z"
+    },
+    {
+      "id": "log-1775264692764-evhm4l",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 83.3% confidence — 37,651 at risk",
+      "createdAt": "2026-04-04T01:04:52.765Z"
+    },
+    {
+      "id": "log-1775264633895-a6mtcn",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 82% confidence — 20,534 at risk",
+      "createdAt": "2026-04-04T01:03:53.895Z"
+    },
+    {
+      "id": "log-1775264621646-tf79nr",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 82.7% confidence — 47,923 at risk",
+      "createdAt": "2026-04-04T01:03:41.646Z"
+    },
+    {
+      "id": "log-1775264614279-os97mp",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 79.3% confidence — 23,108 at risk",
+      "createdAt": "2026-04-04T01:03:34.279Z"
+    },
+    {
+      "id": "log-1775264605646-lmv6ap",
+      "level": "INFO",
+      "message": "AI Flood Prediction: WARNING — 84.7% confidence — 40,800 at risk",
+      "createdAt": "2026-04-04T01:03:25.816Z"
+    },
+    {
+      "id": "log-1775261454240-y8t05k",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:10:54.240Z"
+    },
+    {
+      "id": "log-1775261387274-iozm9o",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:09:47.274Z"
+    },
+    {
+      "id": "log-1775261338913-fdf1tb",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:08:58.913Z"
+    },
+    {
+      "id": "log-1775261326496-81ar96",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:08:46.496Z"
+    },
+    {
+      "id": "log-1775261310347-k0bru0",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:08:30.347Z"
+    },
+    {
+      "id": "log-1775261292557-dflcaq",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:08:12.557Z"
+    },
+    {
+      "id": "log-1775261280506-ytk4rs",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:08:00.506Z"
+    },
+    {
+      "id": "log-1775261207890-1xmuoj",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:06:47.890Z"
+    },
+    {
+      "id": "log-1775261180492-a16tzv",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:06:20.492Z"
+    },
+    {
+      "id": "log-1775261138727-rm4rt1",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:05:38.727Z"
+    },
+    {
+      "id": "log-1775261121399-6lncb6",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:05:21.399Z"
+    },
+    {
+      "id": "log-1775260979645-33bbgj",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:02:59.645Z"
+    },
+    {
+      "id": "log-1775260977557-x5l3pj",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:02:57.557Z"
+    },
+    {
+      "id": "log-1775260949200-1url4v",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-04T00:02:29.200Z"
+    },
+    {
+      "id": "log-1775260639334-5ssoa4",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:57:19.334Z"
+    },
+    {
+      "id": "log-1775260477745-f4jk9m",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:37.745Z"
+    },
+    {
+      "id": "log-1775260477017-3yrxav",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:37.017Z"
+    },
+    {
+      "id": "log-1775260476447-axvc9z",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:36.447Z"
+    },
+    {
+      "id": "log-1775260475893-h7ren4",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:35.893Z"
+    },
+    {
+      "id": "log-1775260475263-bc3n8r",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:35.263Z"
+    },
+    {
+      "id": "log-1775260474410-f338ww",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:34.410Z"
+    },
+    {
+      "id": "log-1775260472708-8kongq",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:32.709Z"
+    },
+    {
+      "id": "log-1775260471750-dgof8h",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:31.750Z"
+    },
+    {
+      "id": "log-1775260468960-ojlcdf",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:54:28.960Z"
+    },
+    {
+      "id": "log-1775260401440-syt1er",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T23:53:21.440Z"
+    },
+    {
+      "id": "log-1775255491360-fnkigo",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MODERATE at Unknown location",
+      "createdAt": "2026-04-03T22:31:31.360Z"
+    },
+    {
+      "id": "log-1775253622642-l156en",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MODERATE at Unknown location",
+      "createdAt": "2026-04-03T22:00:22.642Z"
+    },
+    {
+      "id": "log-1775253603168-0jj3jn",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T22:00:03.168Z"
+    },
+    {
+      "id": "log-1775253586094-nts8z6",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T21:59:46.094Z"
+    },
+    {
+      "id": "log-1775253506073-d4pjrz",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T21:58:26.073Z"
+    },
+    {
+      "id": "log-1775253485939-4otb8k",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MODERATE at Unknown location",
+      "createdAt": "2026-04-03T21:58:05.939Z"
+    },
+    {
+      "id": "log-1775253462791-eslqbl",
+      "level": "INFO",
+      "message": "PyTorch AI Assessment: MINOR at Unknown location",
+      "createdAt": "2026-04-03T21:57:42.791Z"
+    },
+    {
+      "id": "log-1775238624845-psizpc",
+      "level": "INFO",
+      "message": "Checklist updated.",
+      "createdAt": "2026-04-03T17:50:24.845Z"
+    },
+    {
+      "id": "log-1775238623631-zfdwpl",
+      "level": "INFO",
+      "message": "Checklist updated.",
+      "createdAt": "2026-04-03T17:50:23.631Z"
+    },
+    {
+      "id": "log-1775236639337-g3k7kn",
+      "level": "COMM",
+      "message": "New report at Laxmi Nagar, New Delhi",
+      "createdAt": "2026-04-03T17:17:19.337Z"
+    },
+    {
+      "id": "log-1775217157923-59euxv",
+      "level": "COMM",
+      "message": "New report submitted at Old embankment path near Moran",
+      "createdAt": "2026-04-03T11:52:37.923Z"
+    },
+    {
+      "id": "log-1775217157912-b7oj2m",
+      "level": "COMM",
+      "message": "New report submitted at Chandmari Lane 4, Guwahati",
+      "createdAt": "2026-04-03T11:52:37.912Z"
+    },
+    {
+      "id": "log-1775217157902-uukmmz",
+      "level": "COMM",
+      "message": "New report submitted at Majuli ferry ghat sector",
+      "createdAt": "2026-04-03T11:52:37.902Z"
+    },
+    {
+      "id": "log-1775217157895-subymx",
+      "level": "COMM",
+      "message": "New report submitted at Ward 3 Relief Kitchen, Jorhat",
+      "createdAt": "2026-04-03T11:52:37.895Z"
+    },
+    {
+      "id": "log-1775217157883-tfg28j",
+      "level": "COMM",
+      "message": "New report submitted at Approach road to Bogibeel Bridge",
+      "createdAt": "2026-04-03T11:52:37.883Z"
+    },
+    {
+      "id": "log-1775217157874-7offez",
+      "level": "COMM",
+      "message": "New report submitted at Govt HS School Ground, Sivasagar",
+      "createdAt": "2026-04-03T11:52:37.874Z"
+    },
+    {
+      "id": "log-1775217157865-tihtyr",
+      "level": "COMM",
+      "message": "New report submitted at Latasil neighborhood, Guwahati",
+      "createdAt": "2026-04-03T11:52:37.865Z"
+    },
+    {
+      "id": "log-1775217157848-cjj44d",
+      "level": "COMM",
+      "message": "New report submitted at Railway Colony Block B, Dibrugarh",
+      "createdAt": "2026-04-03T11:52:37.848Z"
+    },
+    {
+      "id": "log-1775216966290-6ltjki",
+      "level": "COMM",
+      "message": "New report submitted at NH-27 Bridge Segment 2",
+      "createdAt": "2026-04-03T11:49:26.290Z"
+    },
+    {
+      "id": "log-1775216697378-8j59pb",
+      "level": "COMM",
+      "message": "New report submitted at Dibrugarh Riverbank Lane 5",
+      "createdAt": "2026-04-03T11:44:57.378Z"
+    },
+    {
+      "id": "log-1775216697371-7z9ptz",
+      "level": "COMM",
+      "message": "New report submitted at Sibsagar Sector 3",
+      "createdAt": "2026-04-03T11:44:57.372Z"
+    },
+    {
+      "id": "log-1775216697365-irhug2",
+      "level": "COMM",
+      "message": "New report submitted at Relief Camp B, Guwahati",
+      "createdAt": "2026-04-03T11:44:57.365Z"
+    },
+    {
+      "id": "log-1775216697356-33ot3y",
+      "level": "COMM",
+      "message": "New report submitted at St. Mary School Ground, Dibrugarh",
+      "createdAt": "2026-04-03T11:44:57.356Z"
+    },
+    {
+      "id": "log-1775216697346-gi96hk",
+      "level": "COMM",
+      "message": "New report submitted at NH-27 near Khumtai Junction",
+      "createdAt": "2026-04-03T11:44:57.346Z"
+    },
+    {
+      "id": "log-1775216697312-5z9tss",
+      "level": "COMM",
+      "message": "New report submitted at Jorhat Ward 7, Building C",
+      "createdAt": "2026-04-03T11:44:57.312Z"
+    },
+    {
+      "id": "log-1775216480241-6vxdp3",
+      "level": "COMM",
+      "message": "New report submitted at Test Ward",
+      "createdAt": "2026-04-03T11:41:20.241Z"
+    },
+    {
+      "id": "log-1775216456794-i6dkrq",
+      "level": "COMM",
+      "message": "New report submitted at Test Ward",
+      "createdAt": "2026-04-03T11:40:56.794Z"
+    },
+    {
+      "id": "log-1775214412434-o8dso5",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T11:06:52.434Z"
+    },
+    {
+      "id": "log-1775214406676-xz7zen",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T11:06:46.676Z"
+    },
+    {
+      "id": "log-1775213931678-7qniqz",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:58:51.678Z"
+    },
+    {
+      "id": "log-1775213929411-7rqjlv",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:58:49.411Z"
+    },
+    {
+      "id": "log-1775213341025-62i0b3",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:49:01.025Z"
+    },
+    {
+      "id": "log-1775213335745-l5g0sk",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:48:55.745Z"
+    },
+    {
+      "id": "log-1775212972226-552h5a",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:42:52.226Z"
+    },
+    {
+      "id": "log-1775212971339-e4iyg6",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:42:51.339Z"
+    },
+    {
+      "id": "log-1775212839239-1shnre",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:40:39.239Z"
+    },
+    {
+      "id": "log-1775212837998-p1xkvt",
+      "level": "INFO",
+      "message": "Settings updated.",
+      "createdAt": "2026-04-03T10:40:37.998Z"
+    },
+    {
+      "id": "log-1775209230283-bz4r1r",
+      "level": "INFO",
+      "message": "Backend initialized successfully.",
+      "createdAt": "2026-04-03T09:40:30.283Z"
+    }
+  ],
+  "counters": {
+    "alertsDispatched": 32418
+  },
+  "damage_assessments": [
+    {
+      "id": "dmg-1775261454240-u9fg6w",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 32,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 451260,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:10:54.240Z"
+    },
+    {
+      "id": "dmg-1775261387274-5hizwd",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 14,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 976068,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:09:47.274Z"
+    },
+    {
+      "id": "dmg-1775261338913-gaeoqz",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 24,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 976068,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:08:58.913Z"
+    },
+    {
+      "id": "dmg-1775261326496-8po7sv",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 54,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 104416,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:08:46.496Z"
+    },
+    {
+      "id": "dmg-1775261310347-d02u00",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 28,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 569772,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:08:30.347Z"
+    },
+    {
+      "id": "dmg-1775261292557-73g0y7",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 33,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 473253,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:08:12.557Z"
+    },
+    {
+      "id": "dmg-1775261280506-vm8bp8",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 15,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 451260,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:08:00.506Z"
+    },
+    {
+      "id": "dmg-1775261207890-5ybjn9",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 28,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 451260,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:06:47.890Z"
+    },
+    {
+      "id": "dmg-1775261180492-mqmiel",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 49,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 93786,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:06:20.492Z"
+    },
+    {
+      "id": "dmg-1775261138727-0c9pdx",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 35,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:05:38.727Z"
+    },
+    {
+      "id": "dmg-1775261121399-djy75l",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 54,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 97026,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:05:21.399Z"
+    },
+    {
+      "id": "dmg-1775260979645-1sswkt",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 42,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 97026,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:02:59.645Z"
+    },
+    {
+      "id": "dmg-1775260977557-a289r1",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 41,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 97026,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:02:57.557Z"
+    },
+    {
+      "id": "dmg-1775260949200-tfz0er",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 17,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 2537289,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-04T00:02:29.200Z"
+    },
+    {
+      "id": "dmg-1775260639333-au3j4v",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 11,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 2537289,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:57:19.333Z"
+    },
+    {
+      "id": "dmg-1775260477744-nbpgwt",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 45,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:37.744Z"
+    },
+    {
+      "id": "dmg-1775260477017-oh4gkj",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 45,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:37.017Z"
+    },
+    {
+      "id": "dmg-1775260476447-ru7vod",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 19,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:36.447Z"
+    },
+    {
+      "id": "dmg-1775260475893-o6h171",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 24,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:35.893Z"
+    },
+    {
+      "id": "dmg-1775260475263-px1qec",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 29,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:35.263Z"
+    },
+    {
+      "id": "dmg-1775260474410-eehqi2",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 28,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:34.410Z"
+    },
+    {
+      "id": "dmg-1775260472708-209it9",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 32,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:32.708Z"
+    },
+    {
+      "id": "dmg-1775260471750-1fmyf2",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 35,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:31.750Z"
+    },
+    {
+      "id": "dmg-1775260468960-nfjehc",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 11,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 615514,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:54:28.960Z"
+    },
+    {
+      "id": "dmg-1775260401440-wgo5wm",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 42,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": null,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 17,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (undefined%), Flooding (undefined%), Road blockages (undefined%), Debris coverage (undefined%)."
+      },
+      "imageSize": 2801069,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T23:53:21.440Z"
+    },
+    {
+      "id": "dmg-1775255491360-7qghy2",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MODERATE",
+        "image_type": "satellite",
+        "structures_visible": 21,
+        "damage_breakdown": {
+          "no_damage": 50,
+          "minor_damage": 48,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": true,
+        "road_blockages_detected": 3,
+        "priority_zones": [
+          {
+            "zone": "Unknown location Transit Corridors",
+            "priority": "P2",
+            "reason": "Road blockages potentially isolating survivors",
+            "estimated_affected": 400
+          }
+        ],
+        "immediate_needs": [
+          "Rescue Boats",
+          "Life Jackets"
+        ],
+        "access_routes_assessment": "Impassable roads detected. Dispatch heavy clearance.",
+        "confidence_score": 46,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (48.45%), Flooding (51.14%), Road blockages (52.72%), Debris coverage (40.7%)."
+      },
+      "imageSize": 451260,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T22:31:31.360Z"
+    },
+    {
+      "id": "dmg-1775253622642-x24omn",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MODERATE",
+        "image_type": "satellite",
+        "structures_visible": 18,
+        "damage_breakdown": {
+          "no_damage": 50,
+          "minor_damage": 36,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": true,
+        "road_blockages_detected": 3,
+        "priority_zones": [
+          {
+            "zone": "Unknown location Transit Corridors",
+            "priority": "P2",
+            "reason": "Road blockages potentially isolating survivors",
+            "estimated_affected": 400
+          }
+        ],
+        "immediate_needs": [
+          "Rescue Boats",
+          "Life Jackets"
+        ],
+        "access_routes_assessment": "Impassable roads detected. Dispatch heavy clearance.",
+        "confidence_score": 46,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (36.89%), Flooding (52%), Road blockages (51.07%), Debris coverage (39.28%)."
+      },
+      "imageSize": 8010758,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T22:00:22.642Z"
+    },
+    {
+      "id": "dmg-1775253603168-byc3g8",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 43,
+        "damage_breakdown": {
+          "no_damage": 50,
+          "minor_damage": 44,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 3,
+        "priority_zones": [
+          {
+            "zone": "Unknown location Transit Corridors",
+            "priority": "P2",
+            "reason": "Road blockages potentially isolating survivors",
+            "estimated_affected": 400
+          }
+        ],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Impassable roads detected. Dispatch heavy clearance.",
+        "confidence_score": 47,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (44.98%), Flooding (43.42%), Road blockages (54.59%), Debris coverage (36.75%)."
+      },
+      "imageSize": 3430529,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T22:00:03.168Z"
+    },
+    {
+      "id": "dmg-1775253586094-ik1000",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 38,
+        "damage_breakdown": {
+          "no_damage": 50,
+          "minor_damage": 43,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 43,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (43.2%), Flooding (38.98%), Road blockages (46.59%), Debris coverage (26.9%)."
+      },
+      "imageSize": 216330,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T21:59:46.094Z"
+    },
+    {
+      "id": "dmg-1775253506073-pqmu1f",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 56,
+        "damage_breakdown": {
+          "no_damage": 50,
+          "minor_damage": 42,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 44,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (42.74%), Flooding (37.29%), Road blockages (49.18%), Debris coverage (39.2%)."
+      },
+      "imageSize": 378368,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T21:58:26.073Z"
+    },
+    {
+      "id": "dmg-1775253485939-zxgu7i",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MODERATE",
+        "image_type": "satellite",
+        "structures_visible": 46,
+        "damage_breakdown": {
+          "no_damage": 50,
+          "minor_damage": 50,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 0,
+        "priority_zones": [],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Routes appear navigable.",
+        "confidence_score": 46,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (50.03%), Flooding (42.4%), Road blockages (42.59%), Debris coverage (32.18%)."
+      },
+      "imageSize": 569772,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T21:58:05.939Z"
+    },
+    {
+      "id": "dmg-1775253462791-vkaet3",
+      "location": "Unknown location",
+      "region": "Assam, India",
+      "assessment": {
+        "damage_level_overall": "MINOR",
+        "image_type": "satellite",
+        "structures_visible": 36,
+        "damage_breakdown": {
+          "no_damage": 5,
+          "minor_damage": 45,
+          "major_damage": 0,
+          "destroyed": 0
+        },
+        "flood_water_visible": false,
+        "road_blockages_detected": 3,
+        "priority_zones": [
+          {
+            "zone": "Unknown location Transit Corridors",
+            "priority": "P2",
+            "reason": "Road blockages potentially isolating survivors",
+            "estimated_affected": 400
+          }
+        ],
+        "immediate_needs": [
+          "Medical Kits",
+          "Food Rations",
+          "Tents"
+        ],
+        "access_routes_assessment": "Impassable roads detected. Dispatch heavy clearance.",
+        "confidence_score": 48,
+        "reasoning": "PyTorch Deep Learning array detected: Buildings Minor (45.97%), Flooding (47.95%), Road blockages (51.1%), Debris coverage (37.38%)."
+      },
+      "imageSize": 93070,
+      "mimeType": "image/png",
+      "createdAt": "2026-04-03T21:57:42.791Z"
+    }
+  ]
+}

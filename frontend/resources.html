@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Resources</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <script defer src="js/resq.js"></script>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html" href="index.html">Overview</a>
+      <a class="nav-tab" data-page="early-warning.html" href="early-warning.html">Early Warning</a>
+      <div class="nav-more" id="nav-more">
+        <button class="nav-tab nav-more-btn" type="button" onclick="toggleMoreMenu(event)">More</button>
+        <div class="nav-more-menu">
+          <a class="nav-tab" data-page="evacuation.html" href="evacuation.html">Evacuation</a>
+          <a class="nav-tab" data-page="damage-assessment.html" href="damage-assessment.html">Damage Assessment</a>
+          <a class="nav-tab" data-page="alert-system.html" href="alert-system.html">Alert System</a>
+          <a class="nav-tab" data-page="resources.html" href="resources.html">Resources</a>
+          <a class="nav-tab" data-page="volunteers.html" href="volunteers.html">Volunteers</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()"><span id="theme-label">DARK</span><div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div></button>
+  </nav>
+  <div class="ticker-wrap"><div class="ticker"><span>●</span> FLOOD WARNING: Brahmaputra river at 98% capacity — Dibrugarh, Jorhat, Sibsagar affected &nbsp;&nbsp;&nbsp; <span>●</span> 32,400 alerts dispatched via SMS + Push in last 30 min &nbsp;&nbsp;&nbsp; <span>●</span> Community reports: 4 roads blocked on NH-27 &nbsp;&nbsp;&nbsp; <span>●</span> Shelter Guwahati-3 at 84% capacity — routing new evacuees to Shelter Guwahati-5 &nbsp;&nbsp;&nbsp; <span>●</span> Sentinel-1 SAR imagery available — damage pipeline running</div></div>
+  <main class="container">
+    <h1 class="section-title">Resources</h1>
+    <p class="section-sub">Track relief stock, storage locations, and inventory availability.</p>
+    <section class="card" style="margin-bottom:16px;">
+      <div class="card-header"><span class="card-title">Resource Intake</span><span class="badge">live stock</span></div>
+      <div class="card-body">
+        <div class="form-grid">
+          <div class="field"><label>Name</label><input id="res-name" class="input" type="text" placeholder="Drinking Water"></div>
+          <div class="field"><label>Category</label><select id="res-category"><option>Food</option><option>Medical</option><option>Rescue</option><option>Shelter</option><option>Transport</option></select></div>
+          <div class="field"><label>Stock</label><input id="res-stock" class="input" type="number" value="100"></div>
+          <div class="field"><label>Unit</label><input id="res-unit" class="input" type="text" placeholder="packs, liters, kits"></div>
+          <div class="field" style="grid-column:span 2"><label>Storage Location</label><input id="res-location" class="input" type="text" placeholder="Warehouse or shelter"></div>
+        </div>
+        <div class="hero-actions"><button class="btn" type="button" onclick="addResource()">Add Resource</button></div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="card-header"><span class="card-title">Inventory</span><span class="badge" id="resource-count-badge">0 items</span></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th>Item</th><th>Category</th><th>Stock</th><th>Location</th><th>Action</th></tr></thead><tbody id="resource-table"></tbody></table></div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+</body>
+</html>

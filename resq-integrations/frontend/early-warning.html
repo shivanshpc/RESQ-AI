@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Early Warning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <script defer src="js/resq.js"></script>
+  <style>
+    /* ── Styles specific to the AI Early Warning page ── */
+    .ai-status-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; border-radius: 8px;
+      background: var(--surface-2, #f0f0f0);
+      margin-bottom: 12px; font-size: 13px;
+    }
+    .ai-dot { width: 8px; height: 8px; border-radius: 50%; background: #aaa; }
+    .ai-dot.ready   { background: #22c55e; box-shadow: 0 0 6px #22c55e88; }
+    .ai-dot.loading { background: #facc15; animation: pulse 1s infinite; }
+    .ai-dot.error   { background: #ef4444; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .prediction-spinner {
+      display: none; text-align: center; padding: 24px;
+      font-size: 13px; color: var(--text-muted, #888);
+    }
+    .prediction-spinner.active { display: block; }
+
+    .alert-translations { margin-top: 12px; }
+    .translation-item   { padding: 8px 0; border-bottom: 1px solid var(--border, #eee); }
+    .translation-item:last-child { border-bottom: none; }
+    .translation-lang   { font-size: 11px; font-weight: 700; color: var(--text-muted, #888); margin-bottom: 4px; }
+    .translation-text   { font-size: 13px; }
+
+    .action-list        { margin-top: 8px; }
+    .action-item        { padding: 6px 0; font-size: 13px; display: flex; gap: 8px; align-items: flex-start; }
+    .action-num         { min-width: 20px; font-weight: 700; color: var(--accent, #A6824A); }
+
+    .reasoning-box {
+      background: var(--surface-2, #f5f5f5); border-radius: 8px;
+      padding: 12px 14px; font-size: 12px; color: var(--text-muted, #777);
+      margin-top: 12px; font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html"        href="index.html">Overview</a>
+      <a class="nav-tab" data-page="early-warning.html" href="early-warning.html">Early Warning</a>
+      <a class="nav-tab" data-page="community-map.html" href="community-map.html">Community Map</a>
+      <div class="nav-more" id="nav-more">
+        <button class="nav-tab nav-more-btn" type="button" onclick="toggleMoreMenu(event)">More</button>
+        <div class="nav-more-menu">
+          <a class="nav-tab" data-page="evacuation.html"        href="evacuation.html">Evacuation</a>
+          <a class="nav-tab" data-page="damage-assessment.html" href="damage-assessment.html">Damage Assessment</a>
+          <a class="nav-tab" data-page="alert-system.html"      href="alert-system.html">Alert System</a>
+          <a class="nav-tab" data-page="community-reports.html" href="community-reports.html">Community Reports</a>
+          <a class="nav-tab" data-page="resources.html"         href="resources.html">Resources</a>
+          <a class="nav-tab" data-page="volunteers.html"        href="volunteers.html">Volunteers</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()">
+      <span id="theme-label">DARK</span>
+      <div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div>
+    </button>
+  </nav>
+
+  <div class="ticker-wrap"><div class="ticker">
+    <span>●</span> FLOOD WARNING: Brahmaputra river at 98% capacity — Dibrugarh, Jorhat, Sibsagar affected &nbsp;&nbsp;&nbsp;
+    <span>●</span> AI Early Warning: Model updated with latest IMD sensor data &nbsp;&nbsp;&nbsp;
+    <span>●</span> 32,400 alerts dispatched via SMS + Push in last 30 min &nbsp;&nbsp;&nbsp;
+    <span>●</span> Sentinel-1 SAR imagery available — damage pipeline running
+  </div></div>
+
+  <main class="container">
+    <h1 class="section-title">Early Warning</h1>
+    <p class="section-sub">AI-powered flood and wildfire prediction using real-time sensor inputs.</p>
+
+    <!-- AI Status Bar -->
+    <div class="ai-status-bar">
+      <div class="ai-dot" id="ai-status-dot"></div>
+      <span id="ai-status-text">Checking AI connection…</span>
+    </div>
+
+    <div class="grid cols-2">
+      <!-- ── Sensor Input Panel ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Flood Prediction Inputs</span>
+          <span class="badge warn">Local AI + Sensor Data</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label>Rainfall Level (1–10)</label>
+            <input id="sl-rain" class="slider" type="range" min="1" max="10" value="7" oninput="onSliderChange()">
+            <div class="page-note" id="sv-rain">7/10</div>
+          </div>
+          <div class="field">
+            <label>River Level (1–10)</label>
+            <input id="sl-river" class="slider" type="range" min="1" max="10" value="8" oninput="onSliderChange()">
+            <div class="page-note" id="sv-river">8/10</div>
+          </div>
+          <div class="field">
+            <label>Wind Speed (km/h)</label>
+            <input id="sl-wind" class="slider" type="range" min="0" max="100" value="34" oninput="onSliderChange()">
+            <div class="page-note" id="sv-wind">34 km/h</div>
+          </div>
+
+          <div class="hero-actions" style="margin-top:16px;">
+            <button class="btn" type="button" id="ai-predict-btn" onclick="runAIPrediction()">
+              Run AI Prediction
+            </button>
+          </div>
+          <div class="prediction-spinner" id="pred-spinner">⚙️ Sending to local AI model… please wait</div>
+        </div>
+      </section>
+
+      <!-- ── AI Prediction Output ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">AI Prediction Output</span>
+          <span class="badge danger" id="pred-badge">EMERGENCY</span>
+        </div>
+        <div class="card-body">
+          <div class="panel" style="margin-bottom:16px;">
+            <div class="panel-body">
+              <div class="row"><span class="page-note">Status:</span>         <strong id="p-status">⬛ FLOOD EMERGENCY</strong></div>
+              <div class="row"><span class="page-note">Time to impact:</span> <strong id="p-time">1.8 hours</strong></div>
+              <div class="row"><span class="page-note">Inundation area:</span><strong id="p-area">~340 km²</strong></div>
+              <div class="row"><span class="page-note">Affected pop.:</span>  <strong id="p-pop">45,200 people</strong></div>
+              <div class="row"><span class="page-note">Severity tier:</span>  <strong id="p-tier">EMERGENCY (T3)</strong></div>
+              <div class="row"><span class="page-note">Confidence:</span>     <strong id="p-conf">91.4%</strong></div>
+              <div class="row"><span class="page-note">Flood prob.:</span>    <strong id="p-prob">—</strong></div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Flood Severity Level</label>
+            <div class="meter"><div class="needle" id="flood-needle" style="left:91%"></div></div>
+          </div>
+
+          <!-- AI Reasoning box (hidden until AI runs) -->
+          <div class="reasoning-box" id="ai-reasoning" style="display:none;"></div>
+        </div>
+      </section>
+
+      <!-- ── Recommended Actions (AI-generated) ── -->
+      <section class="card" id="actions-card">
+        <div class="card-header">
+          <span class="card-title">Recommended Actions</span>
+          <span class="badge" id="actions-source">formula-based</span>
+        </div>
+        <div class="card-body">
+          <div class="action-list" id="action-list">
+            <div class="action-item"><span class="action-num">1</span><span>Activate emergency broadcast on all channels</span></div>
+            <div class="action-item"><span class="action-num">2</span><span>Pre-position rescue boats at Dibrugarh Ward 4</span></div>
+            <div class="action-item"><span class="action-num">3</span><span>Open Shelter Guwahati-5 to full capacity</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Multilingual Alert Preview ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Multilingual Alert Preview</span>
+          <span class="badge" id="lang-badge">3 languages</span>
+        </div>
+        <div class="card-body">
+          <div class="alert-translations" id="alert-translations">
+            <div class="translation-item">
+              <div class="translation-lang">ENGLISH</div>
+              <div class="translation-text" id="alert-en">⚠ FLOOD EMERGENCY: Evacuate immediately. Move to higher ground. Nearest shelter: Guwahati-5.</div>
+            </div>
+            <div class="translation-item">
+              <div class="translation-lang">HINDI</div>
+              <div class="translation-text" id="alert-hi">⚠ बाढ़ आपातकाल: तुरंत निकलें। ऊंचे स्थान पर जाएं। निकटतम आश्रय: गुवाहाटी-5।</div>
+            </div>
+            <div class="translation-item">
+              <div class="translation-lang">ASSAMESE</div>
+              <div class="translation-text" id="alert-as">⚠ বান আপৎকাল: তৎকালে নিৰাপদ ঠাইলৈ যাওক। নিকটতম আশ্ৰয়: গুৱাহাটী-৫।</div>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <button class="btn secondary" type="button" onclick="copyAlertToClipboard()">Copy English Alert</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Wildfire Risk ── -->
+      <section class="card">
+        <div class="card-header"><span class="card-title">Wildfire Risk Model</span><span class="badge">low risk</span></div>
+        <div class="card-body">
+          <div class="field">
+            <label>NDVI Vegetation Index</label>
+            <input id="sl-ndvi" class="slider" type="range" min="0" max="100" value="22" oninput="updateFire()">
+            <div class="page-note" id="sv-ndvi">0.22</div>
+          </div>
+          <div class="field">
+            <label>Relative Humidity (%)</label>
+            <input id="sl-hum" class="slider" type="range" min="0" max="100" value="72" oninput="updateFire()">
+            <div class="page-note" id="sv-hum">72%</div>
+          </div>
+          <div class="field">
+            <label>Fire Spread Risk</label>
+            <div class="meter"><div class="needle" id="fire-needle" style="left:15%"></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── AI Early Warning Integration ─────────────────────────────
+
+  let sliderDebounceTimer = null;
+
+  // Update slider display labels (immediate, no API call)
+  function onSliderChange() {
+    const rain  = +document.getElementById('sl-rain').value;
+    const river = +document.getElementById('sl-river').value;
+    const wind  = +document.getElementById('sl-wind').value;
+    document.getElementById('sv-rain').textContent  = `${rain}/10`;
+    document.getElementById('sv-river').textContent = `${river}/10`;
+    document.getElementById('sv-wind').textContent  = `${wind} km/h`;
+
+    // Also update formula-based result instantly while waiting for AI
+    updatePrediction();
+  }
+
+  // ── Main AI Prediction call ───────────────────────────────────
+  async function runAIPrediction() {
+    const rainLevel  = +document.getElementById('sl-rain').value;
+    const riverLevel = +document.getElementById('sl-river').value;
+    const wind  = +document.getElementById('sl-wind').value;
+
+    const rainfall_mm_hr = Math.round((rainLevel / 10) * 200);
+    const river_level_pct = Math.round((riverLevel / 10) * 120);
+    const soil_saturation_pct = Math.max(0, Math.min(100, Math.round(
+      25 + (rainLevel / 10) * 55 + (riverLevel / 10) * 20
+    )));
+
+    // Show loading state
+    const btn     = document.getElementById('ai-predict-btn');
+    const spinner = document.getElementById('pred-spinner');
+    btn.disabled  = true;
+    btn.textContent = 'Analyzing…';
+    spinner.classList.add('active');
+
+    try {
+      const apiHost = (location.protocol === 'file:' ? 'http://127.0.0.1:4000' : '');
+      const response = await fetch(apiHost + '/api/predict/flood', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          rainfall_mm_hr:      rainfall_mm_hr,
+          soil_saturation_pct: soil_saturation_pct,
+          river_level_pct:     river_level_pct,
+          wind_speed_kmh:      wind,
+          region:              'Assam, India'
+        })
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Prediction API failed');
+      }
+
+      const data = await response.json();
+      renderAIPrediction(data);
+      toast('AI prediction complete — ' + data.severity);
+
+    } catch (_err) {
+      document.getElementById('actions-source').textContent = 'formula-based';
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = 'Run AI Prediction';
+      spinner.classList.remove('active');
+    }
+  }
+
+  // ── Render AI prediction results into the UI ──────────────────
+  function renderAIPrediction(data) {
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+    // Severity badge
+    const badge = document.getElementById('pred-badge');
+    if (badge) {
+      badge.textContent  = data.severity;
+      badge.className    = 'badge ' + (data.severity === 'EMERGENCY' ? 'danger' : data.severity === 'WARNING' ? 'warn' : '');
+    }
+
+    set('p-status', data.severity === 'EMERGENCY' ? '⬛ FLOOD EMERGENCY' : data.severity === 'WARNING' ? '⚠ FLOOD WARNING' : '◆ ' + data.severity);
+    set('p-time',   (data.time_to_impact_hrs || '—') + (data.time_to_impact_hrs ? ' hours' : ''));
+    set('p-area',   '~' + (data.area_km2 || '—') + (data.area_km2 ? ' km²' : ''));
+    set('p-pop',    (data.affected_population?.toLocaleString() || '—') + (data.affected_population ? ' people' : ''));
+    set('p-tier',   data.tier || data.severity);
+    set('p-conf',   (data.confidence || '—') + (data.confidence ? '%' : ''));
+    set('p-prob',   (data.flood_probability_pct || '—') + (data.flood_probability_pct ? '%' : ''));
+
+    // Needle position
+    const needle = document.getElementById('flood-needle');
+    if (needle && data.flood_probability_pct != null) {
+      needle.style.left = Math.min(95, data.flood_probability_pct) + '%';
+    }
+
+    // AI Reasoning
+    const reasonBox = document.getElementById('ai-reasoning');
+    if (reasonBox && data.model_reasoning) {
+      reasonBox.style.display = 'block';
+      reasonBox.textContent   = '🤖 ' + data.model_reasoning;
+    }
+
+    // Recommended Actions
+    const actionList = document.getElementById('action-list');
+    if (actionList && data.recommended_actions?.length) {
+      actionList.innerHTML = data.recommended_actions.map((a, i) =>
+        `<div class="action-item"><span class="action-num">${i+1}</span><span>${a}</span></div>`
+      ).join('');
+      document.getElementById('actions-source').textContent = 'AI-generated';
+    }
+
+    // Multilingual alerts
+    if (data.alert_message_en) document.getElementById('alert-en').textContent = data.alert_message_en;
+    if (data.alert_message_hi) document.getElementById('alert-hi').textContent = data.alert_message_hi;
+    if (data.alert_message_as) document.getElementById('alert-as').textContent = data.alert_message_as;
+  }
+
+  function copyAlertToClipboard() {
+    const text = document.getElementById('alert-en')?.textContent || '';
+    navigator.clipboard.writeText(text).then(() => toast('Alert copied to clipboard'));
+  }
+
+  // ── Check if AI backend is reachable ─────────────────────────
+  async function checkAIStatus() {
+    const dot  = document.getElementById('ai-status-dot');
+    const text = document.getElementById('ai-status-text');
+    try {
+      const apiHost = (location.protocol === 'file:' ? 'http://127.0.0.1:4000' : '');
+      const res  = await fetch(apiHost + '/api/predict/status');
+      const data = await res.json();
+      if (data.bridge_ok || data.configured) {
+        dot.className  = 'ai-dot ready';
+        text.textContent = 'Local AI connected — ready for predictions';
+      } else {
+        dot.className  = 'ai-dot error';
+        text.textContent = 'Local AI unavailable — using formula estimates';
+      }
+    } catch {
+      dot.className  = 'ai-dot error';
+      text.textContent = 'Backend unreachable — start the server first';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    checkAIStatus();
+    updatePrediction(); // Run formula version immediately
+    updateFire();
+  });
+  </script>
+</body>
+</html>

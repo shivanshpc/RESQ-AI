@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Alert System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <script defer src="js/resq.js"></script>
+  <style>
+    .channel-grid  { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+    .channel-chip  { display:flex; align-items:center; gap:6px; padding:6px 12px;
+                     border:2px solid var(--border,#ddd); border-radius:8px;
+                     cursor:pointer; font-size:13px; font-weight:600; transition:.15s; }
+    .channel-chip input  { display:none; }
+    .channel-chip.active { border-color:var(--accent,#A6824A); background:var(--accent-soft,#fff8ee); }
+
+    .send-status   { margin-top:12px; padding:12px; border-radius:8px; display:none;
+                     font-size:13px; font-weight:600; }
+    .send-status.success { display:block; background:#dcfce7; color:#166534; }
+    .send-status.error   { display:block; background:#fee2e2; color:#991b1b; }
+
+
+    .stat-row-sm   { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+    .stat-mini     { padding:10px 12px; background:var(--surface-2,#f0f0f0); border-radius:8px; }
+    .stat-mini-val { font-size:20px; font-weight:800; }
+    .stat-mini-lbl { font-size:11px; color:var(--text-muted,#888); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html"         href="index.html">Overview</a>
+      <a class="nav-tab" data-page="early-warning.html" href="early-warning.html">Early Warning</a>
+
+      <div class="nav-more" id="nav-more">
+        <button class="nav-tab nav-more-btn" type="button" onclick="toggleMoreMenu(event)">More</button>
+        <div class="nav-more-menu">
+          <a class="nav-tab" data-page="evacuation.html"        href="evacuation.html">Evacuation</a>
+          <a class="nav-tab" data-page="damage-assessment.html" href="damage-assessment.html">Damage Assessment</a>
+          <a class="nav-tab" data-page="alert-system.html"      href="alert-system.html">Alert System</a>
+          <a class="nav-tab" data-page="community-reports.html" href="community-reports.html">Community Reports</a>
+          <a class="nav-tab" data-page="resources.html"         href="resources.html">Resources</a>
+          <a class="nav-tab" data-page="volunteers.html"        href="volunteers.html">Volunteers</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()">
+      <span id="theme-label">DARK</span>
+      <div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div>
+    </button>
+  </nav>
+
+  <div class="ticker-wrap"><div class="ticker">
+    <span>●</span> FLOOD WARNING: Brahmaputra river at 98% capacity — Dibrugarh, Jorhat, Sibsagar affected &nbsp;&nbsp;&nbsp;
+    <span>●</span> 32,400 alerts dispatched via SMS + Push in last 30 min &nbsp;&nbsp;&nbsp;
+    <span>●</span> Twilio multichannel dispatch: SMS + WhatsApp active
+  </div></div>
+
+  <main class="container">
+    <h1 class="section-title">Alert System</h1>
+    <p class="section-sub">Dispatch real alerts across SMS, WhatsApp, USSD, IVR, and App.</p>
+
+    <div class="grid cols-2">
+      <!-- ── Dispatch Engine ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Dispatch Engine</span>
+          <span class="badge" id="twilio-badge">checking…</span>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>Alert Title</label>
+              <input id="alert-title" class="input" type="text" placeholder="Flash Flood Warning">
+            </div>
+            <div class="field">
+              <label>Severity</label>
+              <select id="alert-severity">
+                <option>EMERGENCY</option>
+                <option>WARNING</option>
+                <option>WATCH</option>
+              </select>
+            </div>
+            <div class="field" style="grid-column:span 2">
+              <label>Message (will be sent verbatim via SMS)</label>
+              <textarea id="alert-message" rows="3" placeholder="Evacuate immediately to higher ground. Nearest shelter: Guwahati-5."></textarea>
+            </div>
+            <div class="field">
+              <label>Target Population (for log count)</label>
+              <input id="alert-pop" class="input" type="number" value="25000">
+            </div>
+            <div class="field">
+              <label>Alert Language</label>
+              <select id="alert-language">
+                <option value="en">English</option>
+                <option value="hi">Hindi (auto-translate)</option>
+                <option value="as">Assamese (auto-translate)</option>
+                <option value="bn">Bengali (auto-translate)</option>
+              </select>
+            </div>
+            <div class="field" style="grid-column:span 2">
+              <label>Test Phone (optional — dev mode, sends only to this number)</label>
+              <input id="alert-test-phone" class="input" type="text" placeholder="+919876543210">
+            </div>
+          </div>
+
+          <!-- Channel selector chips -->
+          <div style="margin-bottom:12px;">
+            <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">CHANNELS</label>
+            <div class="channel-grid" id="channel-grid">
+              <label class="channel-chip active" onclick="toggleChip(this)">
+                <input type="checkbox" value="SMS" checked> 📱 SMS
+              </label>
+              <label class="channel-chip" onclick="toggleChip(this)">
+                <input type="checkbox" value="WHATSAPP"> 💬 WhatsApp
+              </label>
+              <label class="channel-chip active" onclick="toggleChip(this)">
+                <input type="checkbox" value="APP PUSH" checked> 🔔 App Push
+              </label>
+              <label class="channel-chip" onclick="toggleChip(this)">
+                <input type="checkbox" value="USSD"> 📟 USSD
+              </label>
+              <label class="channel-chip" onclick="toggleChip(this)">
+                <input type="checkbox" value="IVR"> 📞 IVR
+              </label>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn" type="button" id="dispatch-btn" onclick="dispatchAlertWithTwilio()">
+              🚨 Dispatch Alert
+            </button>
+            <button class="btn secondary" type="button" onclick="dispatchAlert()">
+              Log Only (no real send)
+            </button>
+          </div>
+
+          <!-- Send result feedback -->
+          <div class="send-status" id="send-status"></div>
+        </div>
+      </section>
+
+      <!-- ── Live Send Stats ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Dispatch Stats</span>
+          <span class="panel-badge" id="dispatch-count-badge">0 SENT THIS SESSION</span>
+        </div>
+        <div class="card-body">
+          <div class="stat-row-sm">
+            <div class="stat-mini">
+              <div class="stat-mini-val" id="stat-sms">0</div>
+              <div class="stat-mini-lbl">SMS Sent</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-val" id="stat-wa">0</div>
+              <div class="stat-mini-lbl">WhatsApp Sent</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-val" id="stat-errors">0</div>
+              <div class="stat-mini-lbl">Errors</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-val" id="stat-total">0</div>
+              <div class="stat-mini-lbl">Total Dispatched</div>
+            </div>
+          </div>
+          <div class="page-note" style="margin-top:8px;">
+            Recipients = volunteers with registered phone numbers in the system.<br>
+            Add more via the <a href="volunteers.html">Volunteers</a> page.
+          </div>
+        </div>
+      </section>
+
+      <!-- ── USSD Demo ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">USSD Demo</span>
+          <span class="badge warn">*140*9#</span>
+        </div>
+        <div class="card-body">
+          <div class="panel" style="background:#000;color:#00ff88;padding:18px;border-radius:14px;font-family:'Space Mono',monospace;line-height:1.9">
+            <div style="color:#888;font-size:10px">RESQ-AI USSD — *140*9#</div>
+            <div>1. Nearest Shelter</div>
+            <div>2. Evacuation Route</div>
+            <div>3. Report SOS</div>
+            <div>4. Alert Status</div>
+            <div style="color:#888;font-size:11px;">Reply with number — works on any phone, no internet needed</div>
+          </div>
+          <p class="page-note" style="margin-top:10px;">USSD integration requires an Africa's Talking or Twilio USSD account and a dedicated short code from your telecom regulator (TRAI in India).</p>
+        </div>
+      </section>
+
+      <!-- ── Live System Log ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Live System Log</span>
+          <span class="badge">streaming</span>
+        </div>
+        <div class="list" id="log-feed">
+          <div class="item">
+            <div class="dot s"></div>
+            <div><div class="item-title">Backend ready for alert streaming</div>
+            <div class="item-meta">Start the server to load live log entries</div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── Session counters ──────────────────────────────────────────
+  const sessionStats = { sms: 0, whatsapp: 0, errors: 0, total: 0 };
+
+  function updateStatDisplay() {
+    document.getElementById('stat-sms').textContent    = sessionStats.sms;
+    document.getElementById('stat-wa').textContent     = sessionStats.whatsapp;
+    document.getElementById('stat-errors').textContent = sessionStats.errors;
+    document.getElementById('stat-total').textContent  = sessionStats.total;
+    document.getElementById('dispatch-count-badge').textContent = sessionStats.total + ' SENT THIS SESSION';
+  }
+
+  // ── Channel chip toggle ───────────────────────────────────────
+  function toggleChip(label) {
+    const cb = label.querySelector('input[type=checkbox]');
+    cb.checked = !cb.checked;
+    label.classList.toggle('active', cb.checked);
+  }
+
+  // ── Real Twilio dispatch ──────────────────────────────────────
+  async function dispatchAlertWithTwilio() {
+    const title      = document.getElementById('alert-title').value.trim();
+    const message    = document.getElementById('alert-message').value.trim();
+    const severity   = document.getElementById('alert-severity').value;
+    const language   = document.getElementById('alert-language').value;
+    const population = +document.getElementById('alert-pop').value || 1000;
+    const testPhone  = document.getElementById('alert-test-phone').value.trim();
+    const channels   = Array.from(document.querySelectorAll('#channel-grid input:checked')).map(el => el.value);
+
+    if (!title || !message)  { toast('Enter a title and message first.'); return; }
+    if (!channels.length)    { toast('Select at least one channel.'); return; }
+
+    const btn = document.getElementById('dispatch-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Dispatching…';
+
+    const statusEl = document.getElementById('send-status');
+    statusEl.className = 'send-status';
+
+    try {
+      const response = await fetch('/api/alerts/send', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, message, severity, channels, language, targetPopulation: population, testPhone: testPhone || null })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        statusEl.className   = 'send-status error';
+        statusEl.textContent = '✗ Dispatch failed: ' + (data.error || 'Unknown error');
+      } else {
+        const smsSent = data.results?.sms?.length     || 0;
+        const waSent  = data.results?.whatsapp?.length || 0;
+
+        sessionStats.sms      += smsSent;
+        sessionStats.whatsapp += waSent;
+        sessionStats.errors   += data.errors?.length || 0;
+        sessionStats.total    += data.sent || 0;
+        updateStatDisplay();
+
+        statusEl.className   = 'send-status success';
+        statusEl.textContent = `✓ Dispatched: ${smsSent} SMS, ${waSent} WhatsApp` +
+          (data.errors?.length ? ` · ${data.errors.length} errors` : '');
+
+        toast('Alert dispatched — ' + data.sent + ' messages sent');
+        renderLogs();
+      }
+
+    } catch (err) {
+      statusEl.className   = 'send-status error';
+      statusEl.textContent = '✗ Network error: ' + err.message;
+      toast('Backend unreachable — start server first');
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = '🚨 Dispatch Alert';
+    }
+  }
+
+
+  window.addEventListener('DOMContentLoaded', () => {
+    renderLogs();
+    setInterval(renderLogs, 15000);
+  });
+  </script>
+</body>
+</html>

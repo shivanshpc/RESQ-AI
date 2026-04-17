@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Evacuation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <!-- Leaflet for interactive map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script defer src="js/resq.js"></script>
+  <style>
+    #evac-map {
+      height: 320px; width: 100%; border-radius: 10px;
+      z-index: 1; background: #e0e0e0;
+    }
+    .route-step   { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--border,#eee); align-items:flex-start; }
+    .route-step:last-child { border-bottom:none; }
+    .step-num     { min-width: 28px; height:28px; border-radius:50%; background:var(--accent,#A6824A);
+                    color:#fff; font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .step-info    { flex:1; }
+    .step-title   { font-size:13px; font-weight:700; }
+    .step-meta    { font-size:11px; color:var(--text-muted,#888); margin-top:2px; }
+
+    .route-summary { display:flex; gap:16px; padding:10px 0; margin-bottom:8px;
+                     border-bottom:2px solid var(--accent,#A6824A); }
+    .route-summary-item  { font-size:13px; }
+    .route-summary-label { font-size:11px; color:var(--text-muted,#888); }
+    .route-summary-val   { font-size:18px; font-weight:800; }
+
+    .coords-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+
+    .ors-status { display:flex; align-items:center; gap:8px; font-size:12px;
+                  padding:8px 12px; border-radius:6px; background:var(--surface-2,#f5f5f5); margin-bottom:12px; }
+    .ors-dot    { width:8px; height:8px; border-radius:50%; background:#aaa; }
+    .ors-dot.ok { background:#22c55e; }
+    .ors-dot.no { background:#ef4444; }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html"         href="index.html">Overview</a>
+      <a class="nav-tab" data-page="early-warning.html" href="early-warning.html">Early Warning</a>
+      <a class="nav-tab" data-page="community-map.html" href="community-map.html">Community Map</a>
+      <div class="nav-more" id="nav-more">
+        <button class="nav-tab nav-more-btn" type="button" onclick="toggleMoreMenu(event)">More</button>
+        <div class="nav-more-menu">
+          <a class="nav-tab" data-page="evacuation.html"        href="evacuation.html">Evacuation</a>
+          <a class="nav-tab" data-page="damage-assessment.html" href="damage-assessment.html">Damage Assessment</a>
+          <a class="nav-tab" data-page="alert-system.html"      href="alert-system.html">Alert System</a>
+          <a class="nav-tab" data-page="community-reports.html" href="community-reports.html">Community Reports</a>
+          <a class="nav-tab" data-page="resources.html"         href="resources.html">Resources</a>
+          <a class="nav-tab" data-page="volunteers.html"        href="volunteers.html">Volunteers</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()">
+      <span id="theme-label">DARK</span>
+      <div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div>
+    </button>
+  </nav>
+
+  <div class="ticker-wrap"><div class="ticker">
+    <span>●</span> Smart Routing: Avoiding NH-27 flood zone — rerouting via Hill Bypass &nbsp;&nbsp;&nbsp;
+    <span>●</span> Shelter Guwahati-5: 347/500 · Guwahati-3: 420/500 (near capacity) &nbsp;&nbsp;&nbsp;
+    <span>●</span> ORS routing engine: active with real-time flood zone avoidance
+  </div></div>
+
+  <main class="container">
+    <h1 class="section-title">Evacuation</h1>
+    <p class="section-sub">Smart route guidance using OpenRouteService — avoids flooded zones from live community reports.</p>
+
+    <div class="grid cols-2">
+      <!-- ── Route Input ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Route Planner</span>
+          <span class="badge warn">ORS + Flood Avoidance</span>
+        </div>
+        <div class="card-body">
+          <div class="ors-status">
+            <div class="ors-dot" id="ors-dot"></div>
+            <span id="ors-status-text">Checking routing engine…</span>
+          </div>
+
+          <p class="page-note" style="margin-bottom:12px;">
+            Enter your current GPS coordinates or use the presets for Assam districts.
+          </p>
+
+          <div class="coords-row">
+            <div class="field">
+              <label>Your Latitude</label>
+              <input id="from-lat" class="input" type="number" step="0.0001" value="26.1215" placeholder="26.1215">
+            </div>
+            <div class="field">
+              <label>Your Longitude</label>
+              <input id="from-lng" class="input" type="number" step="0.0001" value="91.7362" placeholder="91.7362">
+            </div>
+          </div>
+
+          <!-- Quick location presets -->
+          <div style="margin-bottom:12px; display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="btn secondary" onclick="setLocation(26.4740, 94.9120,'Dibrugarh')">📍 Dibrugarh</button>
+            <button class="btn secondary" onclick="setLocation(26.7509, 94.2037,'Jorhat')">📍 Jorhat</button>
+            <button class="btn secondary" onclick="setLocation(26.1215, 91.7362,'Guwahati South')">📍 Guwahati</button>
+            <button class="btn secondary" onclick="useMyLocation()">📡 Use My GPS</button>
+          </div>
+
+          <div class="field">
+            <label>Destination Shelter</label>
+            <select id="shelter-select">
+              <option value="">Auto — pick best available shelter</option>
+              <option value="guwahati-5">Guwahati-5 — St. Xavier's School</option>
+              <option value="guwahati-3">Guwahati-3 — District Hall</option>
+              <option value="jorhat-1">Jorhat Community Centre</option>
+              <option value="dibrugarh-1">Dibrugarh Relief Camp</option>
+            </select>
+          </div>
+
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:16px;cursor:pointer;">
+            <input type="checkbox" id="avoid-flooded" checked>
+            Avoid flooded zones (from community reports)
+          </label>
+
+          <div class="hero-actions">
+            <button class="btn" type="button" id="route-btn" onclick="computeRoute()">
+              🗺️ Get Safe Route
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Route Result ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Route Result</span>
+          <span class="badge" id="route-badge">awaiting input</span>
+        </div>
+        <div class="card-body">
+          <div id="route-summary" style="display:none;" class="route-summary">
+            <div class="route-summary-item">
+              <div class="route-summary-label">DISTANCE</div>
+              <div class="route-summary-val" id="rs-distance">—</div>
+            </div>
+            <div class="route-summary-item">
+              <div class="route-summary-label">ETA</div>
+              <div class="route-summary-val" id="rs-duration">—</div>
+            </div>
+            <div class="route-summary-item">
+              <div class="route-summary-label">SHELTER</div>
+              <div class="route-summary-val" id="rs-shelter" style="font-size:13px;">—</div>
+            </div>
+          </div>
+          <div id="route-steps">
+            <div class="page-note">Enter your location and click Get Safe Route.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Live Map ── -->
+      <section class="card" style="grid-column:span 2;">
+        <div class="card-header">
+          <span class="card-title">Live Evacuation Map</span>
+          <span class="badge">Leaflet + OSM</span>
+        </div>
+        <div class="card-body" style="padding:8px;">
+          <div id="evac-map"></div>
+        </div>
+      </section>
+
+      <!-- ── SMS Route ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">SMS Route (Feature-Phone Format)</span>
+          <span class="badge warn">160 chars max</span>
+        </div>
+        <div class="card-body">
+          <p class="page-note" id="sms-route-text">Route will appear here after calculation — suitable for sending via SMS to evacuees without smartphones.</p>
+          <div class="hero-actions">
+            <button class="btn secondary" onclick="copySMSRoute()">Copy SMS Route</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Active Shelters ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Active Shelters</span>
+          <span class="badge warn" id="shelter-badge">loading…</span>
+        </div>
+        <div class="card-body">
+          <div id="shelter-list"><div class="page-note">Loading shelter data…</div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ── Map setup ─────────────────────────────────────────────────
+  const map = L.map('evac-map').setView([26.14, 91.74], 10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  let routeLayer  = null;
+  let markerFrom  = null;
+  let markerTo    = null;
+
+  // ── Location helpers ──────────────────────────────────────────
+  function setLocation(lat, lng, name) {
+    document.getElementById('from-lat').value = lat;
+    document.getElementById('from-lng').value = lng;
+    if (markerFrom) map.removeLayer(markerFrom);
+    markerFrom = L.marker([lat, lng], { title: 'Your Location' })
+      .addTo(map)
+      .bindPopup('📍 ' + name)
+      .openPopup();
+    map.setView([lat, lng], 11);
+    toast('Location set: ' + name);
+  }
+
+  function useMyLocation() {
+    if (!navigator.geolocation) { toast('Geolocation not supported'); return; }
+    navigator.geolocation.getCurrentPosition(pos => {
+      setLocation(pos.coords.latitude, pos.coords.longitude, 'Your GPS Location');
+    }, () => toast('Could not get GPS location — enter coordinates manually'));
+  }
+
+  // ── Compute route via backend (ORS) ──────────────────────────
+  async function computeRoute() {
+    const lat          = parseFloat(document.getElementById('from-lat').value);
+    const lng          = parseFloat(document.getElementById('from-lng').value);
+    const shelterId    = document.getElementById('shelter-select').value;
+    const avoidFlooded = document.getElementById('avoid-flooded').checked;
+
+    if (!lat || !lng) { toast('Enter your latitude and longitude first'); return; }
+
+    const btn = document.getElementById('route-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Calculating…';
+    document.getElementById('route-badge').textContent = 'computing…';
+
+    try {
+      const res = await fetch('/api/routing/evacuate', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from_lat: lat, from_lng: lng, shelter_id: shelterId || null, avoid_flooded: avoidFlooded })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Routing failed');
+      }
+
+      const data = await res.json();
+      renderRoute(data);
+      toast('Route calculated — ' + data.distance_km + ' km via safe path');
+
+    } catch (err) {
+      document.getElementById('route-badge').textContent = 'error';
+      document.getElementById('route-steps').innerHTML =
+        `<div class="page-note" style="color:#ef4444;">Routing error: ${err.message}</div>
+         <div class="page-note">Make sure ORS_API_KEY is set in your .env file and the backend is running.</div>`;
+      toast('Routing failed: ' + err.message);
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = '🗺️ Get Safe Route';
+    }
+  }
+
+  // ── Render route result ───────────────────────────────────────
+  function renderRoute(data) {
+    // Summary bar
+    document.getElementById('route-summary').style.display = 'flex';
+    document.getElementById('rs-distance').textContent = data.distance_km + ' km';
+    document.getElementById('rs-duration').textContent = data.duration_min + ' min';
+    document.getElementById('rs-shelter').textContent  = data.shelter?.name || 'Shelter';
+    document.getElementById('route-badge').textContent = data.distance_km + 'km · ' + data.duration_min + 'min';
+
+    // Turn-by-turn steps
+    const stepsHTML = data.steps.map((s, i) =>
+      `<div class="route-step">
+        <div class="step-num">${i < data.steps.length - 1 ? i+1 : '✓'}</div>
+        <div class="step-info">
+          <div class="step-title">${s.instruction}</div>
+          <div class="step-meta">${s.distance_km} km · ~${s.duration_min} min</div>
+        </div>
+      </div>`
+    ).join('');
+    document.getElementById('route-steps').innerHTML = stepsHTML;
+
+    // SMS route
+    document.getElementById('sms-route-text').textContent = data.sms_route;
+
+    // Map: draw the route polyline from GeoJSON geometry
+    if (routeLayer) map.removeLayer(routeLayer);
+    if (markerTo)   map.removeLayer(markerTo);
+
+    if (data.geometry) {
+      // ORS returns encoded polyline or GeoJSON — handle both
+      const coords = decodeORSGeometry(data.geometry);
+      routeLayer = L.polyline(coords, { color: '#A6824A', weight: 5, opacity: 0.85 }).addTo(map);
+      map.fitBounds(routeLayer.getBounds(), { padding: [30, 30] });
+    }
+
+    // Destination marker
+    if (data.shelter?.lat && data.shelter?.lng) {
+      markerTo = L.marker([data.shelter.lat, data.shelter.lng], { title: data.shelter.name })
+        .addTo(map)
+        .bindPopup('🏠 ' + data.shelter.name)
+        .openPopup();
+    }
+  }
+
+  // ORS returns a Google-encoded polyline for the geometry field
+  function decodeORSGeometry(encoded) {
+    if (typeof encoded === 'object') {
+      // It's already GeoJSON — extract coordinates
+      return (encoded.coordinates || []).map(c => [c[1], c[0]]);
+    }
+    // Decode Google polyline encoding
+    const coords = [];
+    let index = 0, lat = 0, lng = 0;
+    while (index < encoded.length) {
+      let b, shift = 0, result = 0;
+      do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
+      lat += (result & 1) ? ~(result >> 1) : result >> 1;
+      shift = 0; result = 0;
+      do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
+      lng += (result & 1) ? ~(result >> 1) : result >> 1;
+      coords.push([lat / 1e5, lng / 1e5]);
+    }
+    return coords;
+  }
+
+  function copySMSRoute() {
+    const text = document.getElementById('sms-route-text').textContent;
+    navigator.clipboard.writeText(text).then(() => toast('SMS route copied'));
+  }
+
+  // ── Load shelters from backend ────────────────────────────────
+  async function loadShelters() {
+    try {
+      const shelters = await fetch('/api/routing/shelters').then(r => r.json());
+      const badge    = document.getElementById('shelter-badge');
+      const nearFull = shelters.filter(s => s.pct_full > 80).length;
+      badge.textContent = nearFull + ' NEAR CAPACITY';
+
+      document.getElementById('shelter-list').innerHTML = shelters.map(s => {
+        const color = s.pct_full > 85 ? '#5D1E21' : s.pct_full > 70 ? '#A6824A' : '#154230';
+        return `<div class="item" style="padding-left:0">
+          <div>
+            <div class="item-title">${s.name}</div>
+            <div class="item-meta">${s.occupied}/${s.capacity} ·
+              ${s.hasFood ? '🍽 Food ' : ''}${s.hasWater ? '💧 Water ' : ''}${s.hasMedical ? '🏥 Medical' : ''}</div>
+            <div class="bar" style="margin-top:6px;">
+              <div style="width:${s.pct_full}%;background:${color};height:6px;border-radius:3px;"></div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Add shelter markers to map
+      shelters.forEach(s => {
+        if (s.lat && s.lng) {
+          L.marker([s.lat, s.lng])
+            .addTo(map)
+            .bindPopup(`<strong>${s.name}</strong><br>${s.occupied}/${s.capacity} occupied<br>${s.free_slots} spots free`);
+        }
+      });
+
+    } catch {
+      document.getElementById('shelter-list').innerHTML = '<div class="page-note">Backend offline — using static data</div>';
+    }
+  }
+
+  // ── Check ORS config ──────────────────────────────────────────
+  async function checkORSStatus() {
+    const dot  = document.getElementById('ors-dot');
+    const text = document.getElementById('ors-status-text');
+    try {
+      const res = await fetch('/api/health');
+      if (res.ok) {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          // Can check if ORS key is likely set
+          dot.className   = 'ors-dot ok';
+          text.textContent = 'Routing engine ready — ORS API connected';
+        }
+      }
+    } catch {
+      dot.className   = 'ors-dot no';
+      text.textContent = 'Backend offline — start the server';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    checkORSStatus();
+    loadShelters();
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Report Detail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <script defer src="js/resq.js"></script>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html" href="index.html">Overview</a>
+      <a class="nav-tab" data-page="community-reports.html" href="community-reports.html">Community Reports</a>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()"><span id="theme-label">DARK</span><div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div></button>
+  </nav>
+  <main class="container">
+    <h1 class="section-title">Report Detail</h1>
+    <p class="section-sub">Detailed view for one community submission.</p>
+    <section class="card" id="report-detail">
+      <div class="card-header"><span class="card-title">Community Report Record</span><span class="badge warn">live</span></div>
+      <div class="card-body">
+        <h2 id="detail-heading" style="font-family:var(--display);font-size:32px;line-height:1.1;margin-bottom:12px;">-</h2>
+        <ul class="list" style="margin-bottom:12px; border:1px solid var(--border); border-radius:6px;">
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Report Type:</strong> <span id="detail-type">-</span></li>
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Severity:</strong> <span id="detail-severity">-</span></li>
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Issue Description:</strong> <span id="detail-description">-</span></li>
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Location Description:</strong> <span id="detail-location">-</span></li>
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Pinpoint Coordinates:</strong> <span id="detail-coords">Not provided</span></li>
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Status:</strong> <span id="detail-status">-</span></li>
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Source:</strong> <span id="detail-source">-</span></li>
+          <li class="item"><strong style="min-width:170px;display:inline-block;">Submitted:</strong> <span id="detail-date">-</span></li>
+        </ul>
+
+        <div class="map-big" style="height:320px; margin-bottom:12px;">
+          <svg class="map-svg" viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="320" fill="transparent"/>
+            <line x1="266" y1="0" x2="266" y2="320" stroke="rgba(21,66,48,0.15)" stroke-width="1.5"/>
+            <line x1="533" y1="0" x2="533" y2="320" stroke="rgba(21,66,48,0.15)" stroke-width="1.5"/>
+            <path d="M0,150 C130,135 220,165 370,148 C510,132 620,158 800,142" stroke="#1a4a7a" stroke-width="16" fill="none" opacity="0.65"/>
+            <text x="120" y="110" fill="rgba(16,17,17,0.45)" font-size="11" font-family="monospace">WEST ASSAM</text>
+            <text x="360" y="95" fill="rgba(16,17,17,0.45)" font-size="11" font-family="monospace">CENTRAL ASSAM</text>
+            <text x="620" y="105" fill="rgba(16,17,17,0.45)" font-size="11" font-family="monospace">EAST ASSAM</text>
+
+            <g id="detail-pin" transform="translate(400 170)">
+              <circle r="13" fill="rgba(255,59,59,0.22)" stroke="#ff3b3b" stroke-width="2"></circle>
+              <circle r="5" fill="#ff3b3b"></circle>
+              <circle r="0" fill="none" stroke="#ff3b3b" stroke-width="1.5">
+                <animate attributeName="r" values="7;22;7" dur="2.2s" repeatCount="indefinite"></animate>
+                <animate attributeName="opacity" values="1;0;1" dur="2.2s" repeatCount="indefinite"></animate>
+              </circle>
+            </g>
+          </svg>
+        </div>
+        <div class="hero-actions"><a class="btn secondary" href="community-reports.html">Back To Community Reports</a><a class="btn" href="index.html">Open Overview</a></div>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+</body>
+</html>

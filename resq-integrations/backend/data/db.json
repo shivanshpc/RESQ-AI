@@ -1,0 +1,85 @@
+{
+  "settings": {
+    "theme": "light",
+    "activeDisaster": "Assam Flood",
+    "region": "Assam, India"
+  },
+  "checklist": {
+    "doc": false,
+    "torch": false,
+    "firstaid": false,
+    "hydration": false
+  },
+  "resources": [
+    {
+      "id": "res-1775219175150-srfrvo",
+      "name": "Drinking Water",
+      "category": "Food",
+      "stock": 4800,
+      "unit": "liters",
+      "location": "Guwahati Central Depot",
+      "createdAt": "2026-04-03T12:26:15.150Z"
+    },
+    {
+      "id": "res-1775219175151-naoryh",
+      "name": "ORS Packets",
+      "category": "Medical",
+      "stock": 920,
+      "unit": "packs",
+      "location": "Jorhat Relief Camp",
+      "createdAt": "2026-04-03T12:26:15.151Z"
+    }
+  ],
+  "volunteers": [
+    {
+      "id": "vol-1775219175151-08m19q",
+      "name": "Riya Das",
+      "phone": "9000000011",
+      "skill": "First Aid",
+      "shift": "Morning",
+      "location": "Ward 4 Base",
+      "status": "active",
+      "createdAt": "2026-04-03T12:26:15.151Z"
+    }
+  ],
+  "shelters": [
+    {
+      "id": "sh-1775219175151-ok12ti",
+      "name": "Guwahati-5 — St. Xavier's School",
+      "area": "Guwahati",
+      "capacity": 500,
+      "occupied": 347,
+      "hasFood": true,
+      "hasWater": true,
+      "hasMedical": true,
+      "status": "active",
+      "createdAt": "2026-04-03T12:26:15.151Z"
+    },
+    {
+      "id": "sh-1775219175151-3fww9r",
+      "name": "Guwahati-3 — District Hall",
+      "area": "Guwahati",
+      "capacity": 500,
+      "occupied": 420,
+      "hasFood": true,
+      "hasWater": true,
+      "hasMedical": false,
+      "status": "active",
+      "createdAt": "2026-04-03T12:26:15.151Z"
+    }
+  ],
+  "reports": [],
+  "alerts": [],
+  "damage_assessments": [],
+  "logs": [
+    {
+      "id": "log-1775219175151-vg8dp5",
+      "level": "INFO",
+      "message": "Backend initialized successfully.",
+      "createdAt": "2026-04-03T12:26:15.151Z"
+    }
+  ],
+  "counters": {
+    "alertsDispatched": 32418
+  }
+}

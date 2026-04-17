@@ -1,0 +1,11 @@
+{
+  "name": "resq-ai-fullstack",
+  "private": true,
+  "version": "1.0.0",
+  "description": "RESQ-AI full-stack launcher",
+  "scripts": {
+    "start": "npm --prefix backend start",
+    "dev": "npm --prefix backend run dev",
+    "install:all": "npm --prefix backend install"
+  }
+}

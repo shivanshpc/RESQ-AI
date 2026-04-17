@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <!-- Leaflet for interactive map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script defer src="js/resq.js"></script>
+  <style>
+    #overview-map {
+      height: 400px; width: 100%; border-radius: 10px;
+      z-index: 1; background: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html" href="index.html">Overview</a>
+      <a class="nav-tab" data-page="early-warning.html" href="early-warning.html">Early Warning</a>
+      <div class="nav-more" id="nav-more">
+        <button class="nav-tab nav-more-btn" type="button" onclick="toggleMoreMenu(event)">More</button>
+        <div class="nav-more-menu">
+          <a class="nav-tab" data-page="evacuation.html" href="evacuation.html">Evacuation</a>
+          <a class="nav-tab" data-page="damage-assessment.html" href="damage-assessment.html">Damage Assessment</a>
+          <a class="nav-tab" data-page="alert-system.html" href="alert-system.html">Alert System</a>
+          <a class="nav-tab" data-page="community-reports.html" href="community-reports.html">Community Reports</a>
+          <a class="nav-tab" data-page="resources.html" href="resources.html">Resources</a>
+          <a class="nav-tab" data-page="volunteers.html" href="volunteers.html">Volunteers</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()"><span id="theme-label">DARK</span><div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div></button>
+  </nav>
+  <div class="ticker-wrap"><div class="ticker"><span>●</span> FLOOD WARNING: Brahmaputra river at 98% capacity — Dibrugarh, Jorhat, Sibsagar affected &nbsp;&nbsp;&nbsp; <span>●</span> 32,400 alerts dispatched via SMS + Push in last 30 min &nbsp;&nbsp;&nbsp; <span>●</span> Community reports: 4 roads blocked on NH-27 &nbsp;&nbsp;&nbsp; <span>●</span> Shelter Guwahati-3 at 84% capacity — routing new evacuees to Shelter Guwahati-5 &nbsp;&nbsp;&nbsp; <span>●</span> Sentinel-1 SAR imagery available — damage pipeline running</div></div>
+  <main class="container">
+    <h1 class="section-title">Overview</h1>
+    <p class="section-sub">Operational snapshot of the current flood response across Assam command sectors.</p>
+    <div class="split">
+      <div class="left-col">
+        <div class="stat-row">
+          <div class="stat-card sc-risk">
+            <div class="stat-label sc-label">🚨 People at Risk</div>
+            <div class="stat-value sc-val" id="people-risk">45,200</div>
+            <div class="stat-sub sc-sub">3 wards, Assam</div>
+          </div>
+          <div class="stat-card sc-alerts">
+            <div class="stat-label sc-label">📢 Alerts Sent</div>
+            <div class="stat-value sc-val" id="alerts-sent">32,418</div>
+            <div class="stat-sub sc-sub">last 30 min</div>
+          </div>
+          <div class="stat-card sc-shelters">
+            <div class="stat-label sc-label">🏠 Shelters Active</div>
+            <div class="stat-value sc-val">7</div>
+            <div class="stat-sub sc-sub">2,847 capacity free</div>
+          </div>
+          <div class="stat-card sc-sos">
+            <div class="stat-label sc-label">🆘 SOS Reports</div>
+            <div class="stat-value sc-val" id="sos-count">12</div>
+            <div class="stat-sub sc-sub">unresolved</div>
+          </div>
+        </div>
+
+        <section class="panel" style="flex:1;">
+          <div class="panel-header">
+            <span class="panel-title">Active Alerts</span>
+            <span class="panel-badge">3 CRITICAL</span>
+          </div>
+          <div class="alert-list" id="overview-feed">
+            <div class="alert-item">
+              <div class="alert-dot d"></div>
+              <div>
+                <div class="alert-title">Flash Flood — Dibrugarh Ward 4</div>
+                <div class="alert-meta">SEVERITY: EMERGENCY &nbsp;·&nbsp; 14,200 people &nbsp;·&nbsp; 8 min ago</div>
+              </div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-dot d"></div>
+              <div>
+                <div class="alert-title">Flash Flood — Jorhat District</div>
+                <div class="alert-meta">SEVERITY: EMERGENCY &nbsp;·&nbsp; 18,400 people &nbsp;·&nbsp; 11 min ago</div>
+              </div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-dot w"></div>
+              <div>
+                <div class="alert-title">Flood Watch — Sibsagar</div>
+                <div class="alert-meta">SEVERITY: WARNING &nbsp;·&nbsp; 12,600 people &nbsp;·&nbsp; 23 min ago</div>
+              </div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-dot w"></div>
+              <div>
+                <div class="alert-title">Landslide Risk — Guwahati Hills</div>
+                <div class="alert-meta">SEVERITY: WATCH &nbsp;·&nbsp; 5,800 people &nbsp;·&nbsp; 31 min ago</div>
+              </div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-dot s"></div>
+              <div>
+                <div class="alert-title">All-Clear — Nagaon District</div>
+                <div class="alert-meta">SEVERITY: RESOLVED &nbsp;·&nbsp; 1h 14 min ago</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Hazard Risk Index</span>
+            <span class="panel-badge warn">ELEVATED</span>
+          </div>
+          <div style="padding: 4px 0;">
+            <div class="risk-row">
+              <div class="risk-name">Flood</div>
+              <div class="risk-bar-wrap"><div class="risk-bar" style="width:91%;background:var(--danger);"></div></div>
+              <div class="risk-val" style="color:var(--danger)">91%</div>
+            </div>
+            <div class="risk-row">
+              <div class="risk-name">Landslide</div>
+              <div class="risk-bar-wrap"><div class="risk-bar" style="width:54%;background:var(--warn);"></div></div>
+              <div class="risk-val" style="color:var(--warn)">54%</div>
+            </div>
+            <div class="risk-row">
+              <div class="risk-name">Cyclone</div>
+              <div class="risk-bar-wrap"><div class="risk-bar" style="width:22%;background:var(--safe);"></div></div>
+              <div class="risk-val" style="color:var(--safe)">22%</div>
+            </div>
+            <div class="risk-row">
+              <div class="risk-name">Wildfire</div>
+              <div class="risk-bar-wrap"><div class="risk-bar" style="width:8%;background:var(--safe);"></div></div>
+              <div class="risk-val" style="color:var(--safe)">8%</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Live Disaster Map — Assam, India</span>
+          <div style="display:flex;gap:8px;">
+            <span class="panel-badge">REAL-TIME</span>
+            <span class="panel-badge warn">SAT: SENTINEL-1</span>
+          </div>
+        </div>
+        <div class="panel-body" style="padding:0;">
+          <div id="overview-map"></div>
+        </div>
+      </section>
+
+      <!-- Right Column Content -->
+      <div class="right-col">
+        <!-- Alert Channels Panel -->
+        <section class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Alert Channels</span>
+            <span class="panel-badge safe">6 active</span>
+          </div>
+          <div class="channel-row">
+            <span class="channel-name">APP PUSH</span>
+            <div class="channel-bar-wrap"><div class="channel-bar" style="width:78%"></div></div>
+            <span class="channel-val">32k</span>
+          </div>
+          <div class="channel-row">
+            <span class="channel-name">SMS</span>
+            <div class="channel-bar-wrap"><div class="channel-bar" style="width:55%"></div></div>
+            <span class="channel-val">10k</span>
+          </div>
+          <div class="channel-row">
+            <span class="channel-name">USSD</span>
+            <div class="channel-bar-wrap"><div class="channel-bar" style="width:20%"></div></div>
+            <span class="channel-val">3k</span>
+          </div>
+          <div class="channel-row">
+            <span class="channel-name">IVR VOICE</span>
+            <div class="channel-bar-wrap"><div class="channel-bar" style="width:6%"></div></div>
+            <span class="channel-val">500</span>
+          </div>
+          <div class="channel-row">
+            <span class="channel-name">WHATSAPP</span>
+            <div class="channel-bar-wrap"><div class="channel-bar" style="width:38%"></div></div>
+            <span class="channel-val">7.2k</span>
+          </div>
+          <div class="channel-row">
+            <span class="channel-name">GMS</span>
+            <div class="channel-bar-wrap"><div class="channel-bar" style="width:15%"></div></div>
+            <span class="channel-val">1.8k</span>
+          </div>
+        </section>
+
+        <!-- Community Reports Panel -->
+        <section class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Community Reports</span>
+            <span class="panel-badge warn">LIVE</span>
+          </div>
+          <div class="alert-list" id="overview-community-feed">
+            <div class="alert-item">
+              <div class="alert-dot s"></div>
+              <div>
+                <div class="alert-title"><a class="report-link" href="community-reports.html">Open Community Reports page</a></div>
+                <div class="alert-meta">Latest submitted reports will appear here</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Alert-to-Action Time Panel -->
+        <section class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Alert-to-Action Time</span>
+            <span class="panel-badge">rolling 60m</span>
+          </div>
+          <div class="panel-body">
+            <div class="stat-value safe" style="font-size: 48px;">38m</div>
+            <div class="stat-sub">vs 67m industry average</div>
+            <div style="margin-top: 16px;">
+              <div class="stat-label">Response Improvement</div>
+              <div class="risk-bar-wrap" style="height: 8px;">
+                <div class="risk-bar" style="width: 43%; background: var(--safe);"></div>
+              </div>
+              <div class="stat-sub" style="margin-top: 4px;">43% faster than baseline</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <div class="toast" id="toast"></div>
+</body>
+</html>

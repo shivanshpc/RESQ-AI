@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Community Reports</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <!-- Leaflet for interactive map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script defer src="js/resq.js"></script>
+  <style>
+    #report-map {
+      height: 500px; width: 100%; border-radius: 10px;
+      z-index: 1; background: #e0e0e0;
+    }
+    #detected-address {
+      background: rgba(0, 136, 255, 0.08);
+      border: 1px solid rgba(0, 136, 255, 0.3);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    #detected-address > div:first-child {
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #0088ff;
+    }
+    #address-text {
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html" href="index.html">Overview</a>
+      <a class="nav-tab" data-page="early-warning.html" href="early-warning.html">Early Warning</a>
+      <div class="nav-more" id="nav-more">
+        <button class="nav-tab nav-more-btn" type="button" onclick="toggleMoreMenu(event)">More</button>
+        <div class="nav-more-menu">
+          <a class="nav-tab" data-page="evacuation.html" href="evacuation.html">Evacuation</a>
+          <a class="nav-tab" data-page="damage-assessment.html" href="damage-assessment.html">Damage Assessment</a>
+          <a class="nav-tab" data-page="alert-system.html" href="alert-system.html">Alert System</a>
+          <a class="nav-tab" data-page="community-reports.html" href="community-reports.html">Community Reports</a>
+          <a class="nav-tab" data-page="resources.html" href="resources.html">Resources</a>
+          <a class="nav-tab" data-page="volunteers.html" href="volunteers.html">Volunteers</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()"><span id="theme-label">DARK</span><div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div></button>
+  </nav>
+  <div class="ticker-wrap"><div class="ticker"><span>●</span> FLOOD WARNING: Brahmaputra river at 98% capacity — Dibrugarh, Jorhat, Sibsagar affected &nbsp;&nbsp;&nbsp; <span>●</span> 32,400 alerts dispatched via SMS + Push in last 30 min &nbsp;&nbsp;&nbsp; <span>●</span> Community reports: 4 roads blocked on NH-27 &nbsp;&nbsp;&nbsp; <span>●</span> Shelter Guwahati-3 at 84% capacity — routing new evacuees to Shelter Guwahati-5 &nbsp;&nbsp;&nbsp; <span>●</span> Sentinel-1 SAR imagery available — damage pipeline running</div></div>
+  <main class="container">
+    <h1 class="section-title">Community Reports</h1>
+    <p class="section-sub">Submit field alerts and track them in the live report feed. Click any report to open its dedicated page.</p>
+    <div class="grid cols-2">
+      <section class="card">
+        <div class="card-header"><span class="card-title">Submit Report</span><span class="badge warn">live intake</span></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field" style="grid-column:span 2">
+              <label>Report Name</label>
+              <input class="form-text-input" id="report-name" type="text" placeholder="Short heading for this report">
+            </div>
+            <div class="field">
+              <label>Report Type</label>
+              <select class="form-select" id="report-type">
+                <option>🚨 SOS — People Trapped</option>
+                <option>🚫 Road Blocked / Flooded</option>
+                <option>🏠 Safe Zone Identified</option>
+                <option>🍱 Food / Water Available</option>
+                <option>🏥 Medical Help Needed</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Severity</label>
+              <select class="form-select" id="report-sev">
+                <option>Critical</option>
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+              </select>
+            </div>
+            <div class="field" style="grid-column:span 2">
+              <label>Location Description</label>
+              <input class="form-text-input" id="report-loc" type="text" placeholder="e.g. NH-27, near Khumtai, Jorhat">
+            </div>
+            <div class="field" style="grid-column:span 2">
+              <label>Description</label>
+              <input class="form-text-input" id="report-desc" type="text" placeholder="Brief report details">
+            </div>
+            <div class="field">
+              <label>Latitude (optional)</label>
+              <input class="form-text-input" id="report-lat" type="number" step="0.0001" placeholder="26.1445" onchange="onLatLngChange()" oninput="onLatLngChange()">
+            </div>
+            <div class="field">
+              <label>Longitude (optional)</label>
+              <input class="form-text-input" id="report-lng" type="number" step="0.0001" placeholder="91.7362" onchange="onLatLngChange()" oninput="onLatLngChange()">
+            </div>
+            <div class="field" style="grid-column:span 2">
+              <button class="btn secondary" type="button" onclick="detectReportLocation()" style="width:100%;">📡 Detect My Location</button>
+            </div>
+          </div>
+          <div id="detected-address" style="display:none;">
+            <div>Detected Address</div>
+            <div id="address-text"></div>
+          </div>
+          <div class="hero-actions"><button class="btn" type="button" onclick="submitReport()">Submit Community Report</button></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header"><span class="card-title">Live Disaster Map — Assam, India</span></div>
+        <div class="card-body" style="padding:0;">
+          <div id="report-map"></div>
+        </div>
+      </section>
+
+      <section class="card" style="grid-column:span 2;">
+        <div class="card-header"><span class="card-title">Live Community Feed</span><span class="badge">clickable</span></div>
+        <div class="list" id="community-feed">
+          <div class="item"><div class="dot s"></div><div><div class="item-title">Loading reports...</div><div class="item-meta">Fetching from backend</div></div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div class="toast" id="toast"></div>
+</body>
+</html>

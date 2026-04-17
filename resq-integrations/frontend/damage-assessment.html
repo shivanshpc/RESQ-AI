@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RESQ-AI | Damage Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/resq.css">
+  <script defer src="js/resq.js"></script>
+  <style>
+    .upload-zone {
+      border: 2px dashed var(--border, #ddd);
+      border-radius: 12px; padding: 32px 16px;
+      text-align: center; cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--accent, #A6824A);
+      background: var(--accent-soft, #fff8ee);
+    }
+    .upload-zone input { display:none; }
+    .upload-icon { font-size: 36px; margin-bottom: 8px; }
+    .upload-text { font-size: 13px; color: var(--text-muted, #888); }
+
+    .preview-img {
+      width: 100%; border-radius: 8px; margin-top: 12px;
+      max-height: 240px; object-fit: cover; display: none;
+    }
+
+    .damage-bar-wrap { margin: 8px 0; }
+    .damage-bar-label { display:flex; justify-content:space-between; font-size:12px; margin-bottom:3px; }
+    .damage-bar  { height:8px; border-radius:4px; background:var(--border,#eee); overflow:hidden; }
+    .damage-fill { height:100%; border-radius:4px; transition: width .8s ease; }
+
+    .priority-zone { display:flex; gap:10px; padding:10px 0;
+                     border-bottom:1px solid var(--border,#eee); align-items:flex-start; }
+    .priority-zone:last-child { border-bottom: none; }
+
+    .needs-chip { display:inline-block; padding:3px 8px; border-radius:20px;
+                  font-size:11px; font-weight:700; background:var(--surface-2,#f0f0f0);
+                  margin:3px 2px; }
+
+    .ai-reasoning-box {
+      background: var(--surface-2, #f5f5f5); border-radius: 8px;
+      padding: 12px 14px; font-size: 12px; color: var(--text-muted,#777);
+      margin-top: 12px; font-style: italic; border-left: 3px solid var(--accent,#A6824A);
+    }
+    .confidence-ring { display:flex; align-items:center; gap:12px; padding:10px 0; }
+    .conf-number     { font-size:36px; font-weight:800; }
+    .conf-label      { font-size:12px; color:var(--text-muted,#888); }
+
+    .analyzing-overlay {
+      display:none; position:absolute; inset:0; background:rgba(0,0,0,.5);
+      border-radius:8px; align-items:center; justify-content:center;
+      flex-direction:column; gap:10px; color:#fff; font-size:14px; font-weight:700;
+    }
+    .analyzing-overlay.active { display:flex; }
+    .upload-wrap { position:relative; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width:32px; height:32px; border:3px solid #fff4;
+               border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="logo"><div class="logo-icon"></div>RESQ-AI</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" data-page="index.html"         href="index.html">Overview</a>
+      <a class="nav-tab" data-page="early-warning.html" href="early-warning.html">Early Warning</a>
+      <a class="nav-tab" data-page="community-map.html" href="community-map.html">Community Map</a>
+      <div class="nav-more" id="nav-more">
+        <button class="nav-tab nav-more-btn" type="button" onclick="toggleMoreMenu(event)">More</button>
+        <div class="nav-more-menu">
+          <a class="nav-tab" data-page="evacuation.html"        href="evacuation.html">Evacuation</a>
+          <a class="nav-tab" data-page="damage-assessment.html" href="damage-assessment.html">Damage Assessment</a>
+          <a class="nav-tab" data-page="alert-system.html"      href="alert-system.html">Alert System</a>
+          <a class="nav-tab" data-page="community-reports.html" href="community-reports.html">Community Reports</a>
+          <a class="nav-tab" data-page="resources.html"         href="resources.html">Resources</a>
+          <a class="nav-tab" data-page="volunteers.html"        href="volunteers.html">Volunteers</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div>ACTIVE DISASTER — ASSAM FLOOD</div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()">
+      <span id="theme-label">DARK</span>
+      <div class="toggle-track" id="toggle-track"><div class="toggle-thumb"></div></div>
+    </button>
+  </nav>
+
+  <div class="ticker-wrap"><div class="ticker">
+    <span>●</span> Sentinel-1 SAR imagery available — damage pipeline running &nbsp;&nbsp;&nbsp;
+    <span>●</span> Claude Vision AI: Upload any satellite or ground image for instant analysis &nbsp;&nbsp;&nbsp;
+    <span>●</span> 1,240 structures assessed · 87.3% confidence
+  </div></div>
+
+  <main class="container">
+    <h1 class="section-title">Damage Assessment</h1>
+    <p class="section-sub">Upload satellite, aerial, or ground-level imagery — Claude Vision AI classifies damage and prioritizes relief zones.</p>
+
+    <!-- ── Summary Stats (static, from last pipeline run) ── -->
+    <div class="grid cols-4" style="margin-bottom:16px;">
+      <div class="card"><div class="card-body">
+        <div class="section-title" style="font-size:34px;margin:0;color:#7a6a58" id="count-no">641</div>
+        <div class="page-note">No Damage</div>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <div class="section-title" style="font-size:34px;margin:0;color:#A6824A" id="count-minor">312</div>
+        <div class="page-note">Minor Damage</div>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <div class="section-title" style="font-size:34px;margin:0;color:#5D1E21" id="count-major">198</div>
+        <div class="page-note">Major Damage</div>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <div class="section-title" style="font-size:34px;margin:0;color:#5D1E21" id="count-destroyed">89</div>
+        <div class="page-note">Destroyed</div>
+      </div></div>
+    </div>
+
+    <div class="grid cols-2">
+      <!-- ── Image Upload & AI Analysis ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">AI Image Analysis</span>
+          <span class="badge warn">Claude Vision</span>
+        </div>
+        <div class="card-body">
+          <div class="upload-wrap">
+            <!-- Upload zone -->
+            <div class="upload-zone" id="upload-zone"
+                 onclick="document.getElementById('img-input').click()"
+                 ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+              <input type="file" id="img-input" accept="image/jpeg,image/png,image/webp" onchange="handleFileSelect(event)">
+              <div class="upload-icon">🛰️</div>
+              <div class="upload-text">
+                <strong>Click to upload</strong> or drag & drop<br>
+                Satellite imagery, aerial photos, or ground-level photos<br>
+                JPEG, PNG, WebP — max 10MB
+              </div>
+              <img class="preview-img" id="img-preview" alt="preview">
+            </div>
+            <div class="analyzing-overlay" id="analyzing-overlay">
+              <div class="spinner"></div>
+              <div>Claude Vision analyzing image…</div>
+            </div>
+          </div>
+
+          <div class="form-grid" style="margin-top:12px;">
+            <div class="field">
+              <label>Location Name</label>
+              <input id="dmg-location" class="input" type="text" placeholder="e.g. Ward 7 — Jorhat Old Town">
+            </div>
+            <div class="field">
+              <label>Region</label>
+              <input id="dmg-region" class="input" type="text" value="Assam, India">
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn" type="button" id="analyze-btn" onclick="runDamageAssessment()" disabled>
+              🔍 Analyze with AI
+            </button>
+            <button class="btn secondary" onclick="document.getElementById('img-input').click()">
+              Change Image
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── AI Results Panel ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Assessment Results</span>
+          <span class="badge" id="result-badge">awaiting image</span>
+        </div>
+        <div class="card-body" id="result-panel">
+          <div class="page-note">Upload an image and click Analyze to get AI damage classification.</div>
+        </div>
+      </section>
+
+      <!-- ── Priority Zones ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Relief Priority Zones</span>
+          <span class="badge" id="zones-source">last pipeline run</span>
+        </div>
+        <div id="priority-zones-list">
+          <div class="item"><div class="badge danger">P1</div><div><div class="item-title">Ward 7 — Jorhat Old Town</div><div class="item-meta">89 destroyed · 12,400 population · 0 shelter access</div></div></div>
+          <div class="item"><div class="badge danger">P2</div><div><div class="item-title">Ward 4 — Dibrugarh South</div><div class="item-meta">61 destroyed · 8,700 population · limited shelter</div></div></div>
+          <div class="item"><div class="badge warn">P3</div><div><div class="item-title">NH-27 Corridor — Khumtai</div><div class="item-meta">128 major damage · road blocked</div></div></div>
+          <div class="item"><div class="badge warn">P4</div><div><div class="item-title">Sibsagar Rural — 3 villages</div><div class="item-meta">84 minor damage · accessible</div></div></div>
+        </div>
+      </section>
+
+      <!-- ── Pipeline Status ── -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-title">Pipeline Status</span>
+          <span class="badge">running</span>
+        </div>
+        <div class="card-body">
+          <div class="page-note">Imagery Source: Sentinel-1 SAR</div>
+          <div class="page-note">Cloud Cover Override: SAR penetrates clouds ✓</div>
+          <div class="page-note">Structures Analyzed: <strong id="structures-count">1,240</strong></div>
+          <div class="page-note">Assessment Time: 2h 47min (vs 72hr manual)</div>
+          <div class="page-note">AI Model: Claude Vision (Sonnet)</div>
+          <div class="hero-actions" style="margin-top:12px;">
+            <button class="btn secondary" onclick="loadHistory()">View AI History</button>
+            <button class="btn" onclick="exportReport()">Export Report</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ── AI Assessment History ── -->
+    <section class="card" id="history-section" style="margin-top:16px; display:none;">
+      <div class="card-header">
+        <span class="card-title">Recent AI Assessments</span>
+        <span class="badge" id="history-count">0</span>
+      </div>
+      <div id="history-list" class="list"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  let selectedFile = null;
+
+  // ── Drag & drop handlers ──────────────────────────────────────
+  function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.add('drag-over');
+  }
+  function handleDragLeave(e) {
+    document.getElementById('upload-zone').classList.remove('drag-over');
+  }
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) setFile(file);
+  }
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) setFile(file);
+  }
+
+  function setFile(file) {
+    if (!file.type.startsWith('image/')) { toast('Please select an image file (JPEG, PNG, WebP)'); return; }
+    if (file.size > 10 * 1024 * 1024)   { toast('File too large — max 10MB'); return; }
+    selectedFile = file;
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = e => {
+      const preview   = document.getElementById('img-preview');
+      preview.src     = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+
+    document.getElementById('analyze-btn').disabled = false;
+    toast('Image loaded — click Analyze to run AI assessment');
+  }
+
+  // ── Run AI damage assessment ──────────────────────────────────
+  async function runDamageAssessment() {
+    if (!selectedFile) { toast('Please select an image first'); return; }
+
+    const location = document.getElementById('dmg-location').value.trim() || 'Unknown location';
+    const region   = document.getElementById('dmg-region').value.trim()   || 'Assam, India';
+
+    const btn = document.getElementById('analyze-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Analyzing…';
+    document.getElementById('analyzing-overlay').classList.add('active');
+    document.getElementById('result-badge').textContent = 'analyzing…';
+
+    try {
+      const formData = new FormData();
+      formData.append('image',    selectedFile);
+      formData.append('location', location);
+      formData.append('region',   region);
+
+      const res = await fetch('/api/damage/assess', { method: 'POST', body: formData });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || err.detail || 'Assessment failed');
+      }
+
+      const data = await res.json();
+      renderAssessmentResult(data);
+      toast('AI assessment complete — ' + data.damage_level_overall);
+
+    } catch (err) {
+      document.getElementById('result-badge').textContent = 'error';
+      document.getElementById('result-panel').innerHTML =
+        `<div class="page-note" style="color:#ef4444;">Error: ${err.message}</div>
+         <div class="page-note">Make sure ANTHROPIC_API_KEY is set in backend/.env and the server is running.</div>`;
+      toast('Assessment failed: ' + err.message);
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = '🔍 Analyze with AI';
+      document.getElementById('analyzing-overlay').classList.remove('active');
+    }
+  }
+
+  // ── Render AI results ─────────────────────────────────────────
+  function renderAssessmentResult(data) {
+    const badge = document.getElementById('result-badge');
+    const levelColors = { CATASTROPHIC:'danger', SEVERE:'danger', MODERATE:'warn', MINOR:'' };
+    badge.textContent = data.damage_level_overall;
+    badge.className   = 'badge ' + (levelColors[data.damage_level_overall] || '');
+
+    const bd    = data.damage_breakdown || {};
+    const total = (bd.no_damage||0) + (bd.minor_damage||0) + (bd.major_damage||0) + (bd.destroyed||0) || 1;
+
+    function bar(count, color) {
+      const pct = Math.round((count / total) * 100);
+      return `<div class="damage-bar-wrap">
+        <div class="damage-bar-label"><span>${color.label} — ${count}</span><span>${pct}%</span></div>
+        <div class="damage-bar"><div class="damage-fill" style="width:${pct}%;background:${color.bg}"></div></div>
+      </div>`;
+    }
+
+    // Update top stats
+    if (bd.no_damage    != null) document.getElementById('count-no').textContent        = bd.no_damage;
+    if (bd.minor_damage != null) document.getElementById('count-minor').textContent      = bd.minor_damage;
+    if (bd.major_damage != null) document.getElementById('count-major').textContent      = bd.major_damage;
+    if (bd.destroyed    != null) document.getElementById('count-destroyed').textContent  = bd.destroyed;
+
+    // Needs chips
+    const needs = (data.immediate_needs || []).map(n => `<span class="needs-chip">${n}</span>`).join('');
+
+    document.getElementById('result-panel').innerHTML = `
+      <div class="confidence-ring">
+        <div>
+          <div class="conf-number">${data.confidence_score || '—'}%</div>
+          <div class="conf-label">AI Confidence</div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;">${data.structures_visible || 0} structures analyzed</div>
+          <div style="font-size:12px;color:var(--text-muted,#888);">${data.image_type || 'image'} · ${data.flood_water_visible ? '🌊 Flood water visible' : 'No flood water detected'}</div>
+          <div style="font-size:12px;color:var(--text-muted,#888);">${data.road_blockages_detected || 0} road blockages detected</div>
+        </div>
+      </div>
+
+      ${bar(bd.no_damage    || 0, { label:'No Damage',    bg:'#22c55e' })}
+      ${bar(bd.minor_damage || 0, { label:'Minor Damage', bg:'#A6824A' })}
+      ${bar(bd.major_damage || 0, { label:'Major Damage', bg:'#dc2626' })}
+      ${bar(bd.destroyed    || 0, { label:'Destroyed',    bg:'#7f1d1d' })}
+
+      <div style="margin-top:12px;">
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px;">IMMEDIATE NEEDS</div>
+        <div>${needs || '<span class="page-note">None identified</span>'}</div>
+      </div>
+
+      <div class="ai-reasoning-box">🤖 ${data.reasoning || 'No reasoning provided.'}</div>
+
+      <div style="margin-top:12px;font-size:12px;color:var(--text-muted,#888);">
+        Access routes: ${data.access_routes_assessment || '—'}
+      </div>`;
+
+    // Update priority zones
+    if (data.priority_zones?.length) {
+      document.getElementById('priority-zones-list').innerHTML = data.priority_zones.map(z =>
+        `<div class="priority-zone">
+          <div class="badge ${z.priority === 'P1' ? 'danger' : 'warn'}">${z.priority}</div>
+          <div>
+            <div class="item-title">${z.zone}</div>
+            <div class="item-meta">${z.reason} · ~${(z.estimated_affected||0).toLocaleString()} affected</div>
+          </div>
+        </div>`
+      ).join('');
+      document.getElementById('zones-source').textContent = 'AI-assessed';
+    }
+  }
+
+  // ── Load assessment history ───────────────────────────────────
+  async function loadHistory() {
+    const section = document.getElementById('history-section');
+    section.style.display = 'block';
+    try {
+      const data = await fetch('/api/damage/history').then(r => r.json());
+      document.getElementById('history-count').textContent = data.length + ' assessments';
+      document.getElementById('history-list').innerHTML = data.length === 0
+        ? '<div class="item"><div class="page-note">No assessments yet — run your first one above.</div></div>'
+        : data.map(a =>
+            `<div class="item">
+              <div class="dot ${a.assessment?.damage_level_overall === 'CATASTROPHIC' ? 'd' : 'w'}"></div>
+              <div>
+                <div class="item-title">${a.location} — ${a.assessment?.damage_level_overall || '?'}</div>
+                <div class="item-meta">${a.assessment?.structures_visible || 0} structures · ${a.assessment?.confidence_score || '?'}% confidence · ${new Date(a.createdAt).toLocaleString()}</div>
+              </div>
+            </div>`
+          ).join('');
+    } catch {
+      document.getElementById('history-list').innerHTML = '<div class="item"><div class="page-note">Backend unavailable.</div></div>';
+    }
+  }
+
+  function exportReport() {
+    const panel = document.getElementById('result-panel').innerText;
+    const blob  = new Blob(['RESQ-AI Damage Assessment Report\n\n' + panel], { type:'text/plain' });
+    const url   = URL.createObjectURL(blob);
+    const a     = document.createElement('a');
+    a.href      = url;
+    a.download  = 'damage-assessment-' + new Date().toISOString().slice(0,10) + '.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  </script>
+</body>
+</html>
